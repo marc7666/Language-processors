@@ -13,9 +13,12 @@
 	int comments_c = 0;
 %}
 
-operators ("+"|"*"|"-"|"/")
-delimiters ("("|")"|"["|"]"|"{"|"}")
+operators ("+"|"*"|"-"|"/"|"::"|"->"|"="|"<"|">"|".."|"$"|".")
+delimiters ("("|")"|"["|"]"|"{"|"}"|"|")
 separators [ \t\n]+
+reserved ("if"|"do"|"otherwise")
+identifiers [a-zA-Z'_]+[a-zA-Z'_0-9]*
+numbers [0-9]*
 
 %%
 
@@ -25,23 +28,47 @@ separators [ \t\n]+
 				}
 <inside_comment>\n {
 						comments_c += 1;
-						separators_c += 1;
-						printf(" (Found a comment)");
+						printf("<COM");
 						BEGIN(0);
 						ECHO;
+						printf(">");
+						REJECT;
 					}
 {operators}		{
 					operators_c += 1;
+					printf("<OP");
 					ECHO;
+					printf(">");
 				}
 {delimiters}	{
 					delimiters_c += 1;
+					printf("<DEL");
 					ECHO;
+					printf(">");
 				}
 {separators}	{
-					printf("<SEP>");
+					printf("<SEP");
 					separators_c += 1;
 					ECHO;
+					printf(">");
+				}
+{reserved}		{
+					printf("<RES");
+					reserved_words_c += 1;
+					ECHO;
+					printf(">");
+				}
+{identifiers}	{
+					printf("<IDF");
+					identifiers_c += 1;
+					ECHO;
+					printf(">");
+				}
+{numbers}		{
+					printf("<NUM");
+					constants_c += 1;
+					ECHO;
+					printf(">");
 				}
 				
 %%
