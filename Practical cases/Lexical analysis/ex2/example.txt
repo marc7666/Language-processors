@@ -1,0 +1,11 @@
+-- This is a comment line
+-- OR and AND can be either "or" and "and" or "||" and "&&"
+P and Q <-> (!R or (Q -> T))
+P && <-> (!R || (Q -> T))
+P and Q <-> (!R || (Q -> T
+PQ <-> (!R (Q -> T))
+
+P + Q * (!r or (Q -> T))
+[P and Q <=> (!R or (Q -> T))]
+p and q < - > (!R or (Q => T))
+P && Q <-> (!R or (Q => T)) -- Bad formula with comment
