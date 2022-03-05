@@ -10,11 +10,14 @@
 %}
 
 operators ("|"|"."|"*"|"+"|"?"|"("|")"|"["|"]"|"-")
-vars [a-z]
+vars [a-z]+
+vars2 ["buida"|"BUIDA"]
 delimiters (\n)
 separators [ \t]+
 
 %%
+
+^()
 
 "--"  {
         BEGIN(inside_comment);
@@ -28,6 +31,7 @@ separators [ \t]+
 <panic>\n          {
                       printf("\n ERROR at character %i\n", character_err);
                       printf(" Caused by %s\n", error);
+                      strcpy(error, "");
                       BEGIN(0);
                     }
 {operators}         |
@@ -35,8 +39,4 @@ separators [ \t]+
 {separators}        |
 {vars}  {
           ECHO;
-        }
-\n      {
-          ECHO;
-          
         }
