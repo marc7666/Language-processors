@@ -11,19 +11,12 @@
 %}
 
 operators ("|"|"."|"*"|"+"|"?"|"("|")"|"["|"]"|"-")
-vars [a-z|"buida"|"BUIDA"]*
+vars [a-z|"buida"|"BUIDA"]+
 delimiters (\n)
 separators [ \t]+
 
 %%
 
-^(.+|\n)			{
-						if (cn == 0){
-							printf("Line: %i - ", lines);
-							cn = 1;
-						}
-						REJECT;
-					}
 "--"				{
 						BEGIN(inside_comment);
 						ECHO;
