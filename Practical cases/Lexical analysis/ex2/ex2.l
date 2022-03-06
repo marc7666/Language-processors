@@ -5,6 +5,7 @@
 
 %{
 	#include <string.h>
+	int character_err = 0;
 	int lines = 0;
 	char error[24];
 	int cn = 0;
@@ -20,6 +21,7 @@ vars [A-Z]+
 ^(.+|\n)			{
 						if (cn == 0){
 							printf("Line: %i - ", lines);
+							character_err = 0;
 							cn = 1;
 						}
 						REJECT;
@@ -35,7 +37,7 @@ vars [A-Z]+
 						BEGIN(0);
 					}
 <panic>\n			{
-						printf("\n ERROR at line %i\n", lines);
+						printf("\n ERROR at line %i:%i\n", lines, character_err);
 						printf(" Caused by %s\n", error);
 						strcpy(error, "");
 						lines += 1;
@@ -47,6 +49,7 @@ vars [A-Z]+
 {separators}	|
 {vars}			{
 					ECHO;
+					character_err += strlen(yytext);
 				}
 \n				{
 					ECHO;

@@ -486,11 +486,12 @@ char *yytext;
 
 #line 7 "ex2.l"
 	#include <string.h>
+	int character_err = 0;
 	int lines = 0;
 	char error[24];
 	int cn = 0;
-#line 493 "lex.yy.c"
 #line 494 "lex.yy.c"
+#line 495 "lex.yy.c"
 
 #define INITIAL 0
 #define panic 1
@@ -716,10 +717,10 @@ YY_DECL
 		}
 
 	{
-#line 18 "ex2.l"
+#line 19 "ex2.l"
 
 
-#line 723 "lex.yy.c"
+#line 724 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -785,10 +786,11 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 20 "ex2.l"
+#line 21 "ex2.l"
 {
 						if (cn == 0){
 							printf("Line: %i - ", lines);
+							character_err = 0;
 							cn = 1;
 						}
 						REJECT;
@@ -796,7 +798,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "ex2.l"
+#line 29 "ex2.l"
 {	
 						BEGIN(inside_comment);
 						ECHO;
@@ -805,7 +807,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 31 "ex2.l"
+#line 33 "ex2.l"
 {
 						ECHO;
 						lines += 1;
@@ -816,9 +818,9 @@ YY_RULE_SETUP
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 37 "ex2.l"
+#line 39 "ex2.l"
 {
-						printf("\n ERROR at line %i\n", lines);
+						printf("\n ERROR at line %i:%i\n", lines, character_err);
 						printf(" Caused by %s\n", error);
 						strcpy(error, "");
 						lines += 1;
@@ -827,22 +829,23 @@ YY_RULE_SETUP
 					}
 	YY_BREAK
 case 5:
-#line 46 "ex2.l"
-case 6:
-#line 47 "ex2.l"
-case 7:
 #line 48 "ex2.l"
+case 6:
+#line 49 "ex2.l"
+case 7:
+#line 50 "ex2.l"
 case 8:
 YY_RULE_SETUP
-#line 48 "ex2.l"
+#line 50 "ex2.l"
 {
 					ECHO;
+					character_err += strlen(yytext);
 				}
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 51 "ex2.l"
+#line 54 "ex2.l"
 {
 					ECHO;
 					lines += 1;
@@ -851,7 +854,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 56 "ex2.l"
+#line 59 "ex2.l"
 {
 					BEGIN(panic);
 					strcpy(error, yytext);
@@ -860,10 +863,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 61 "ex2.l"
+#line 64 "ex2.l"
 ECHO;
 	YY_BREAK
-#line 867 "lex.yy.c"
+#line 870 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(panic):
 			case YY_STATE_EOF(inside_comment):
@@ -1809,4 +1812,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "ex2.l"
+#line 64 "ex2.l"
