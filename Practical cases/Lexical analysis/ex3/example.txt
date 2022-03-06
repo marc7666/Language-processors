@@ -1,0 +1,11 @@
+-- Comment line
+(a|BUIDA).c.(d.buida)?
+a b (c|d)?
+((a|b|c).(buida|b+.c*))?
+(buida|+.c*)?
+[a-z]+
+[-]+
+|.*+
+aeiou
+[A-Z]+
+[a,b]+
