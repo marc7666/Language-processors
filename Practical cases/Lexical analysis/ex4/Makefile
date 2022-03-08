@@ -1,4 +1,4 @@
-TARGET = ex3
+TARGET = ex4
 all: $(TARGET)
 
 $(TARGET) : $(TARGET).l
