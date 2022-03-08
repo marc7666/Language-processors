@@ -1,6 +1,6 @@
 // Inici x2
 
-#include <x3.c>
+#include "x3.c"
 #define C1 "cNNstant"
 #define C2 30
 

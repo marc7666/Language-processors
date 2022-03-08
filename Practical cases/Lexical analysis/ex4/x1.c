@@ -1,7 +1,7 @@
 // Inici x1
 
-#include <x2.c>
-#include <x3.c>
+#include "x2.c"
+#include "x3.c"
 #define C1 "constant"
 #define C2 26
 

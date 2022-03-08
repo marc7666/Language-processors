@@ -1,5 +1,0 @@
-
-Aquest es el text3
-
-No conté include!
-
