@@ -1,6 +1,6 @@
 // Inici x3
 
-#define CON ":)"
+#define CON "hello"
 #define C2 550
 
 int x3(){

@@ -37,19 +37,20 @@ simbols [a-zA-Z_0-9\\" \t]+
                                                     	assert(yyin != NULL);
                                                     	yypush_buffer_state( yy_create_buffer( yyin, YY_BUF_SIZE ));
                                                     	buffer_d += 1;
+                                                    	defs_d[buffer_d] = 0;
                                                     	BEGIN(INITIAL);
                                                     }
-                                                    
+
 ^"#define"[ \t]+		{
 							BEGIN( DEFINE );
 						}
 
 <DEFINE>[A-Z_][A-Z_0-9]+	{
 								BEGIN (DEFINED);
-								strcpy(define_dict[buffer_d][defs_d[buffer_d]], yytext);			
+								strcpy(define_dict[buffer_d][defs_d[buffer_d]], yytext);
                         	}
-<DEFINED>{simbols}		{
-							strcpy(define_vals[buffer_d][defs_d[buffer_d]], yytext);
+<DEFINED>[ ]{simbols}	{
+							strcpy(define_vals[buffer_d][defs_d[buffer_d]], &yytext[1]);
 							defs_d[buffer_d] += 1;
 							BEGIN(INITIAL);
 						}
@@ -58,23 +59,20 @@ simbols [a-zA-Z_0-9\\" \t]+
 														yypop_buffer_state();
 														buffer_d -= 1;
                                                     	if (!YY_CURRENT_BUFFER) yyterminate();
-                                                    	for (int i = 0; i < defs_d[buffer_d]; i++){
-                                                    		printf("%s %s\n", define_dict[buffer_d][i],define_vals[buffer_d][defs_d[i]]);	
-                                                    	}
                                                     }
 
-.|\n		{
-				int found = 0;
-				for (int i = 0; i < defs_d[buffer_d]; i++){
-					if(strcmp(yytext,define_dict[buffer_d][i]) == 0){
-						printf("%s", define_vals[buffer_d][defs_d[i]]);
-						found = 1;
-					}	
-				}
-				if (found == 0){
-					ECHO;
-				}
-			}
+[A-Z_][A-Z_0-9]+	{
+						int found = 0;
+						for (int i = 0; i < defs_d[buffer_d]; i++){
+							if(strcmp(yytext,define_dict[buffer_d][i]) == 0){
+								printf("%s", define_vals[buffer_d][i]);
+								found = 1;
+							}
+						}
+						if (found == 0){
+							ECHO;
+						}
+					}
 
 %%
 
