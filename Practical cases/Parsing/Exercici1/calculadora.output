@@ -1,0 +1,852 @@
+Estat 12conflictes: 5 shift/reduce
+Estat 19conflictes: 6 reduce/reduce
+Estat 21conflictes: 5 shift/reduce
+Estat 39conflictes: 4 shift/reduce
+
+
+Gramàtica
+
+    0 $accept: calculadora $end
+
+    1 calculadora: ε
+    2            | calculadora sentencia
+
+    3 sentencia: '\n'
+    4          | expri '\n'
+    5          | expr '\n'
+    6          | REGI '=' expri '\n'
+    7          | REGL '=' expr '\n'
+    8          | error '\n'
+
+    9 expri: expri '%' expri
+   10      | expri '&' expri
+   11      | expri '|' expri
+   12      | '(' expri ')'
+   13      | expri '+' expri
+   14      | expri '-' expri
+   15      | expri '*' expri
+   16      | expri '/' expri
+   17      | '-' expri
+   18      | REGI
+   19      | INT
+
+   20 expr: '(' expr ')'
+   21     | expr '+' expr
+   22     | expr '-' expr
+   23     | expr '*' expr
+   24     | expr '/' expr
+   25     | '-' expr
+   26     | expri
+   27     | REGL
+   28     | REAL
+
+
+Terminals, amb regles on apareixen
+
+    $end (0) 0
+    '\n' (10) 3 4 5 6 7 8
+    '%' (37) 9
+    '&' (38) 10
+    '(' (40) 12 20
+    ')' (41) 12 20
+    '*' (42) 15 23
+    '+' (43) 13 21
+    '-' (45) 14 17 22 25
+    '/' (47) 16 24
+    '=' (61) 6 7
+    '|' (124) 11
+    error (256) 8
+    REGI <reg> (258) 6 18
+    REGL <reg> (259) 7 27
+    INT <valor> (260) 19
+    REAL <valr> (261) 28
+    UMENYS (262)
+
+
+No-terminals, amb regles on apareixen
+
+    $accept (19)
+        on left: 0
+    calculadora <valr> (20)
+        on left: 1 2
+        on right: 0 2
+    sentencia <valr> (21)
+        on left: 3 4 5 6 7 8
+        on right: 2
+    expri <valor> (22)
+        on left: 9 10 11 12 13 14 15 16 17 18 19
+        on right: 4 6 9 10 11 12 13 14 15 16 17 26
+    expr <valr> (23)
+        on left: 20 21 22 23 24 25 26 27 28
+        on right: 5 7 20 21 22 23 24 25
+
+
+Estat 0
+
+    0 $accept: • calculadora $end
+
+    $default  redueix usant la regla 1 (calculadora)
+
+    calculadora  ves a l'estat 1
+
+
+Estat 1
+
+    0 $accept: calculadora • $end
+    2 calculadora: calculadora • sentencia
+
+    $end   fes un shift, i ves a l'estat 2
+    error  fes un shift, i ves a l'estat 3
+    REGI   fes un shift, i ves a l'estat 4
+    REGL   fes un shift, i ves a l'estat 5
+    INT    fes un shift, i ves a l'estat 6
+    REAL   fes un shift, i ves a l'estat 7
+    '-'    fes un shift, i ves a l'estat 8
+    '\n'   fes un shift, i ves a l'estat 9
+    '('    fes un shift, i ves a l'estat 10
+
+    sentencia  ves a l'estat 11
+    expri      ves a l'estat 12
+    expr       ves a l'estat 13
+
+
+Estat 2
+
+    0 $accept: calculadora $end •
+
+    $default  accepta
+
+
+Estat 3
+
+    8 sentencia: error • '\n'
+
+    '\n'  fes un shift, i ves a l'estat 14
+
+
+Estat 4
+
+    6 sentencia: REGI • '=' expri '\n'
+   18 expri: REGI •
+
+    '='  fes un shift, i ves a l'estat 15
+
+    $default  redueix usant la regla 18 (expri)
+
+
+Estat 5
+
+    7 sentencia: REGL • '=' expr '\n'
+   27 expr: REGL •
+
+    '='  fes un shift, i ves a l'estat 16
+
+    $default  redueix usant la regla 27 (expr)
+
+
+Estat 6
+
+   19 expri: INT •
+
+    $default  redueix usant la regla 19 (expri)
+
+
+Estat 7
+
+   28 expr: REAL •
+
+    $default  redueix usant la regla 28 (expr)
+
+
+Estat 8
+
+   17 expri: '-' • expri
+   25 expr: '-' • expr
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 19
+    expr   ves a l'estat 20
+
+
+Estat 9
+
+    3 sentencia: '\n' •
+
+    $default  redueix usant la regla 3 (sentencia)
+
+
+Estat 10
+
+   12 expri: '(' • expri ')'
+   20 expr: '(' • expr ')'
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 21
+    expr   ves a l'estat 22
+
+
+Estat 11
+
+    2 calculadora: calculadora sentencia •
+
+    $default  redueix usant la regla 2 (calculadora)
+
+
+Estat 12
+
+    4 sentencia: expri • '\n'
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+   26 expr: expri •
+
+    '|'   fes un shift, i ves a l'estat 23
+    '&'   fes un shift, i ves a l'estat 24
+    '+'   fes un shift, i ves a l'estat 25
+    '-'   fes un shift, i ves a l'estat 26
+    '*'   fes un shift, i ves a l'estat 27
+    '/'   fes un shift, i ves a l'estat 28
+    '%'   fes un shift, i ves a l'estat 29
+    '\n'  fes un shift, i ves a l'estat 30
+
+    '+'   [redueix usant la regla 26 (expr)]
+    '-'   [redueix usant la regla 26 (expr)]
+    '*'   [redueix usant la regla 26 (expr)]
+    '/'   [redueix usant la regla 26 (expr)]
+    '\n'  [redueix usant la regla 26 (expr)]
+
+
+Estat 13
+
+    5 sentencia: expr • '\n'
+   21 expr: expr • '+' expr
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+
+    '+'   fes un shift, i ves a l'estat 31
+    '-'   fes un shift, i ves a l'estat 32
+    '*'   fes un shift, i ves a l'estat 33
+    '/'   fes un shift, i ves a l'estat 34
+    '\n'  fes un shift, i ves a l'estat 35
+
+
+Estat 14
+
+    8 sentencia: error '\n' •
+
+    $default  redueix usant la regla 8 (sentencia)
+
+
+Estat 15
+
+    6 sentencia: REGI '=' • expri '\n'
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 38
+
+
+Estat 16
+
+    7 sentencia: REGL '=' • expr '\n'
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 39
+    expr   ves a l'estat 40
+
+
+Estat 17
+
+   18 expri: REGI •
+
+    $default  redueix usant la regla 18 (expri)
+
+
+Estat 18
+
+   27 expr: REGL •
+
+    $default  redueix usant la regla 27 (expr)
+
+
+Estat 19
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+   17      | '-' expri •
+   26 expr: expri •
+
+    '+'       redueix usant la regla 17 (expri)
+    '+'       [redueix usant la regla 26 (expr)]
+    '-'       redueix usant la regla 17 (expri)
+    '-'       [redueix usant la regla 26 (expr)]
+    '*'       redueix usant la regla 17 (expri)
+    '*'       [redueix usant la regla 26 (expr)]
+    '/'       redueix usant la regla 17 (expri)
+    '/'       [redueix usant la regla 26 (expr)]
+    '\n'      redueix usant la regla 17 (expri)
+    '\n'      [redueix usant la regla 26 (expr)]
+    ')'       redueix usant la regla 17 (expri)
+    ')'       [redueix usant la regla 26 (expr)]
+    $default  redueix usant la regla 17 (expri)
+
+
+Estat 20
+
+   21 expr: expr • '+' expr
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+   25     | '-' expr •
+
+    $default  redueix usant la regla 25 (expr)
+
+
+Estat 21
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   12      | '(' expri • ')'
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+   26 expr: expri •
+
+    '|'  fes un shift, i ves a l'estat 23
+    '&'  fes un shift, i ves a l'estat 24
+    '+'  fes un shift, i ves a l'estat 25
+    '-'  fes un shift, i ves a l'estat 26
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+    ')'  fes un shift, i ves a l'estat 41
+
+    '+'  [redueix usant la regla 26 (expr)]
+    '-'  [redueix usant la regla 26 (expr)]
+    '*'  [redueix usant la regla 26 (expr)]
+    '/'  [redueix usant la regla 26 (expr)]
+    ')'  [redueix usant la regla 26 (expr)]
+
+
+Estat 22
+
+   20 expr: '(' expr • ')'
+   21     | expr • '+' expr
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+
+    '+'  fes un shift, i ves a l'estat 31
+    '-'  fes un shift, i ves a l'estat 32
+    '*'  fes un shift, i ves a l'estat 33
+    '/'  fes un shift, i ves a l'estat 34
+    ')'  fes un shift, i ves a l'estat 42
+
+
+Estat 23
+
+   11 expri: expri '|' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 43
+
+
+Estat 24
+
+   10 expri: expri '&' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 44
+
+
+Estat 25
+
+   13 expri: expri '+' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 45
+
+
+Estat 26
+
+   14 expri: expri '-' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 46
+
+
+Estat 27
+
+   15 expri: expri '*' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 47
+
+
+Estat 28
+
+   16 expri: expri '/' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 48
+
+
+Estat 29
+
+    9 expri: expri '%' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 49
+
+
+Estat 30
+
+    4 sentencia: expri '\n' •
+
+    $default  redueix usant la regla 4 (sentencia)
+
+
+Estat 31
+
+   21 expr: expr '+' • expr
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 39
+    expr   ves a l'estat 50
+
+
+Estat 32
+
+   22 expr: expr '-' • expr
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 39
+    expr   ves a l'estat 51
+
+
+Estat 33
+
+   23 expr: expr '*' • expr
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 39
+    expr   ves a l'estat 52
+
+
+Estat 34
+
+   24 expr: expr '/' • expr
+
+    REGI  fes un shift, i ves a l'estat 17
+    REGL  fes un shift, i ves a l'estat 18
+    INT   fes un shift, i ves a l'estat 6
+    REAL  fes un shift, i ves a l'estat 7
+    '-'   fes un shift, i ves a l'estat 8
+    '('   fes un shift, i ves a l'estat 10
+
+    expri  ves a l'estat 39
+    expr   ves a l'estat 53
+
+
+Estat 35
+
+    5 sentencia: expr '\n' •
+
+    $default  redueix usant la regla 5 (sentencia)
+
+
+Estat 36
+
+   17 expri: '-' • expri
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 54
+
+
+Estat 37
+
+   12 expri: '(' • expri ')'
+
+    REGI  fes un shift, i ves a l'estat 17
+    INT   fes un shift, i ves a l'estat 6
+    '-'   fes un shift, i ves a l'estat 36
+    '('   fes un shift, i ves a l'estat 37
+
+    expri  ves a l'estat 55
+
+
+Estat 38
+
+    6 sentencia: REGI '=' expri • '\n'
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    '|'   fes un shift, i ves a l'estat 23
+    '&'   fes un shift, i ves a l'estat 24
+    '+'   fes un shift, i ves a l'estat 25
+    '-'   fes un shift, i ves a l'estat 26
+    '*'   fes un shift, i ves a l'estat 27
+    '/'   fes un shift, i ves a l'estat 28
+    '%'   fes un shift, i ves a l'estat 29
+    '\n'  fes un shift, i ves a l'estat 56
+
+
+Estat 39
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+   26 expr: expri •
+
+    '|'  fes un shift, i ves a l'estat 23
+    '&'  fes un shift, i ves a l'estat 24
+    '+'  fes un shift, i ves a l'estat 25
+    '-'  fes un shift, i ves a l'estat 26
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+
+    '+'       [redueix usant la regla 26 (expr)]
+    '-'       [redueix usant la regla 26 (expr)]
+    '*'       [redueix usant la regla 26 (expr)]
+    '/'       [redueix usant la regla 26 (expr)]
+    $default  redueix usant la regla 26 (expr)
+
+
+Estat 40
+
+    7 sentencia: REGL '=' expr • '\n'
+   21 expr: expr • '+' expr
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+
+    '+'   fes un shift, i ves a l'estat 31
+    '-'   fes un shift, i ves a l'estat 32
+    '*'   fes un shift, i ves a l'estat 33
+    '/'   fes un shift, i ves a l'estat 34
+    '\n'  fes un shift, i ves a l'estat 57
+
+
+Estat 41
+
+   12 expri: '(' expri ')' •
+
+    $default  redueix usant la regla 12 (expri)
+
+
+Estat 42
+
+   20 expr: '(' expr ')' •
+
+    $default  redueix usant la regla 20 (expr)
+
+
+Estat 43
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   11      | expri '|' expri •
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    '&'  fes un shift, i ves a l'estat 24
+    '+'  fes un shift, i ves a l'estat 25
+    '-'  fes un shift, i ves a l'estat 26
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+
+    $default  redueix usant la regla 11 (expri)
+
+
+Estat 44
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   10      | expri '&' expri •
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    '+'  fes un shift, i ves a l'estat 25
+    '-'  fes un shift, i ves a l'estat 26
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+
+    $default  redueix usant la regla 10 (expri)
+
+
+Estat 45
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   13      | expri '+' expri •
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+
+    $default  redueix usant la regla 13 (expri)
+
+
+Estat 46
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   14      | expri '-' expri •
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+
+    $default  redueix usant la regla 14 (expri)
+
+
+Estat 47
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   15      | expri '*' expri •
+   16      | expri • '/' expri
+
+    $default  redueix usant la regla 15 (expri)
+
+
+Estat 48
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+   16      | expri '/' expri •
+
+    $default  redueix usant la regla 16 (expri)
+
+
+Estat 49
+
+    9 expri: expri • '%' expri
+    9      | expri '%' expri •
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    $default  redueix usant la regla 9 (expri)
+
+
+Estat 50
+
+   21 expr: expr • '+' expr
+   21     | expr '+' expr •
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+
+    '*'  fes un shift, i ves a l'estat 33
+    '/'  fes un shift, i ves a l'estat 34
+
+    $default  redueix usant la regla 21 (expr)
+
+
+Estat 51
+
+   21 expr: expr • '+' expr
+   22     | expr • '-' expr
+   22     | expr '-' expr •
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+
+    '*'  fes un shift, i ves a l'estat 33
+    '/'  fes un shift, i ves a l'estat 34
+
+    $default  redueix usant la regla 22 (expr)
+
+
+Estat 52
+
+   21 expr: expr • '+' expr
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   23     | expr '*' expr •
+   24     | expr • '/' expr
+
+    $default  redueix usant la regla 23 (expr)
+
+
+Estat 53
+
+   21 expr: expr • '+' expr
+   22     | expr • '-' expr
+   23     | expr • '*' expr
+   24     | expr • '/' expr
+   24     | expr '/' expr •
+
+    $default  redueix usant la regla 24 (expr)
+
+
+Estat 54
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+   17      | '-' expri •
+
+    $default  redueix usant la regla 17 (expri)
+
+
+Estat 55
+
+    9 expri: expri • '%' expri
+   10      | expri • '&' expri
+   11      | expri • '|' expri
+   12      | '(' expri • ')'
+   13      | expri • '+' expri
+   14      | expri • '-' expri
+   15      | expri • '*' expri
+   16      | expri • '/' expri
+
+    '|'  fes un shift, i ves a l'estat 23
+    '&'  fes un shift, i ves a l'estat 24
+    '+'  fes un shift, i ves a l'estat 25
+    '-'  fes un shift, i ves a l'estat 26
+    '*'  fes un shift, i ves a l'estat 27
+    '/'  fes un shift, i ves a l'estat 28
+    '%'  fes un shift, i ves a l'estat 29
+    ')'  fes un shift, i ves a l'estat 41
+
+
+Estat 56
+
+    6 sentencia: REGI '=' expri '\n' •
+
+    $default  redueix usant la regla 6 (sentencia)
+
+
+Estat 57
+
+    7 sentencia: REGL '=' expr '\n' •
+
+    $default  redueix usant la regla 7 (sentencia)
