@@ -67,13 +67,11 @@
 
 
 /* First part of user prologue.  */
-#line 8 "exercici2.y"
+#line 8 "exercici3.y"
 
 	
 	#include<stdio.h>
 	#include<ctype.h>
-	#include<string.h>
-	#define MAXLEN 100
 
 	extern int nlin;
     extern int yylex(void);
@@ -82,7 +80,7 @@
 	
 
 
-#line 86 "exercici2.tab.c"
+#line 84 "exercici3.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -105,7 +103,7 @@
 #  endif
 # endif
 
-#include "exercici2.tab.h"
+#include "exercici3.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -118,15 +116,15 @@ enum yysymbol_kind_t
   YYSYMBOL_5_ = 5,                         /* '+'  */
   YYSYMBOL_6_ = 6,                         /* '-'  */
   YYSYMBOL_7_ = 7,                         /* '*'  */
-  YYSYMBOL_DIV = 8,                        /* DIV  */
-  YYSYMBOL_MOD = 9,                        /* MOD  */
+  YYSYMBOL_8_div_ = 8,                     /* "div"  */
+  YYSYMBOL_9_mod_ = 9,                     /* "mod"  */
   YYSYMBOL_UMENYS = 10,                    /* UMENYS  */
   YYSYMBOL_11_n_ = 11,                     /* '\n'  */
-  YYSYMBOL_12_ = 12,                       /* ';'  */
-  YYSYMBOL_13_ = 13,                       /* '('  */
-  YYSYMBOL_14_ = 14,                       /* ')'  */
+  YYSYMBOL_12_ = 12,                       /* '('  */
+  YYSYMBOL_13_ = 13,                       /* ')'  */
+  YYSYMBOL_14_ = 14,                       /* ';'  */
   YYSYMBOL_YYACCEPT = 15,                  /* $accept  */
-  YYSYMBOL_sufixer = 16,                   /* sufixer  */
+  YYSYMBOL_parenter = 16,                  /* parenter  */
   YYSYMBOL_sentencia = 17,                 /* sentencia  */
   YYSYMBOL_expr = 18                       /* expr  */
 };
@@ -456,16 +454,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   37
+#define YYLAST   64
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  15
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  18
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  26
+#define YYNSTATES  40
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   262
@@ -486,8 +484,8 @@ static const yytype_int8 yytranslate[] =
       11,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      13,    14,     7,     5,     2,     6,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    12,
+      12,    13,     7,     5,     2,     6,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    14,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -515,8 +513,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    42,    42,    43,    45,    46,    47,    51,    52,    53,
-      54,    55,    56,    57,    58
+       0,    39,    39,    40,    42,    43,    44,    46,    50,    52,
+      54,    56,    58,    60,    62,    64,    66,    68,    70
 };
 #endif
 
@@ -533,8 +531,8 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "OPER", "INT", "'+'",
-  "'-'", "'*'", "DIV", "MOD", "UMENYS", "'\\n'", "';'", "'('", "')'",
-  "$accept", "sufixer", "sentencia", "expr", YY_NULLPTR
+  "'-'", "'*'", "\"div\"", "\"mod\"", "UMENYS", "'\\n'", "'('", "')'",
+  "';'", "$accept", "parenter", "sentencia", "expr", YY_NULLPTR
 };
 
 static const char *
@@ -544,7 +542,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-10)
+#define YYPACT_NINF (-11)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -558,9 +556,10 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -10,     0,   -10,    -9,   -10,    -1,   -10,    -1,   -10,    25,
-     -10,   -10,    15,    -1,    -1,    -1,    -1,    -1,    -3,   -10,
-      18,    18,   -10,   -10,   -10,   -10
+     -11,    19,   -11,   -10,   -11,    52,   -11,    52,   -11,    27,
+     -11,    52,   -11,    37,    52,    52,    52,    52,    52,    -3,
+      46,    52,    52,    52,    -7,    -4,    -4,   -11,   -11,   -11,
+     -11,   -11,     1,     2,     8,    11,   -11,   -11,   -11,   -11
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -568,15 +567,16 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1,     0,    14,     0,     4,     0,     3,     0,
-       6,    13,     0,     0,     0,     0,     0,     0,     0,     7,
-       8,     9,    10,    12,    11,     5
+       2,     0,     1,     0,    18,     0,     4,     0,     3,     0,
+       7,     0,    17,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,    11,    12,    13,    14,    16,    15,
+       6,    11,    14,    16,    15,     0,     8,    10,     9,     5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,   -10,   -10,     2
+     -11,   -11,   -11,    -5
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -590,41 +590,48 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,     3,    10,     4,     4,     5,     5,    11,    25,    12,
-       0,     6,     7,     7,     0,    20,    21,    22,    23,    24,
-      13,    14,    15,    16,    17,    15,    16,    17,     0,    19,
-      13,    14,    15,    16,    17,     0,     0,    18
+      12,    10,    13,    16,    17,    18,    20,    35,    30,    25,
+      26,    27,    28,    29,    36,    37,    32,    33,    34,     2,
+       3,    38,    39,     4,     0,     5,     0,     0,     0,     0,
+       6,     7,    14,    15,    16,    17,    18,     0,     0,     0,
+       0,    19,    14,    15,    21,    22,    23,     0,     0,     0,
+      24,    14,    15,    21,    22,    23,     4,     0,     5,    31,
+       0,     0,     0,     0,    11
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     1,    11,     4,     4,     6,     6,     5,    11,     7,
-      -1,    11,    13,    13,    -1,    13,    14,    15,    16,    17,
-       5,     6,     7,     8,     9,     7,     8,     9,    -1,    14,
-       5,     6,     7,     8,     9,    -1,    -1,    12
+       5,    11,     7,     7,     8,     9,    11,    14,    11,    14,
+      15,    16,    17,    18,    13,    13,    21,    22,    23,     0,
+       1,    13,    11,     4,    -1,     6,    -1,    -1,    -1,    -1,
+      11,    12,     5,     6,     7,     8,     9,    -1,    -1,    -1,
+      -1,    14,     5,     6,     7,     8,     9,    -1,    -1,    -1,
+      13,     5,     6,     7,     8,     9,     4,    -1,     6,    13,
+      -1,    -1,    -1,    -1,    12
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    16,     0,     1,     4,     6,    11,    13,    17,    18,
-      11,    18,    18,     5,     6,     7,     8,     9,    12,    14,
-      18,    18,    18,    18,    18,    11
+       0,    16,     0,     1,     4,     6,    11,    12,    17,    18,
+      11,    12,    18,    18,     5,     6,     7,     8,     9,    14,
+      18,     7,     8,     9,    13,    18,    18,    18,    18,    18,
+      11,    13,    18,    18,    18,    14,    13,    13,    13,    11
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    15,    16,    16,    17,    17,    17,    18,    18,    18,
-      18,    18,    18,    18,    18
+       0,    15,    16,    16,    17,    17,    17,    17,    18,    18,
+      18,    18,    18,    18,    18,    18,    18,    18,    18
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     2,     1,     3,     2,     3,     3,     3,
-       3,     3,     3,     2,     1
+       0,     2,     0,     2,     1,     5,     3,     2,     5,     5,
+       5,     3,     3,     3,     3,     3,     3,     2,     1
 };
 
 
@@ -1087,81 +1094,117 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* sufixer: %empty  */
-#line 42 "exercici2.y"
-                    {;}
-#line 1094 "exercici2.tab.c"
+  case 2: /* parenter: %empty  */
+#line 39 "exercici3.y"
+                            {;}
+#line 1101 "exercici3.tab.c"
     break;
 
   case 4: /* sentencia: '\n'  */
-#line 45 "exercici2.y"
+#line 42 "exercici3.y"
                                         {;}
-#line 1100 "exercici2.tab.c"
+#line 1107 "exercici3.tab.c"
     break;
 
-  case 5: /* sentencia: expr ';' '\n'  */
-#line 46 "exercici2.y"
-                                                   {fprintf(stdout,"%s \n", (yyvsp[-2].oper));}
-#line 1106 "exercici2.tab.c"
+  case 5: /* sentencia: '(' expr ')' ';' '\n'  */
+#line 43 "exercici3.y"
+                                                                {fprintf(stdout,"Sobre parentesis exterior");}
+#line 1113 "exercici3.tab.c"
     break;
 
-  case 6: /* sentencia: error '\n'  */
-#line 47 "exercici2.y"
+  case 6: /* sentencia: expr ';' '\n'  */
+#line 44 "exercici3.y"
+                                                   {//fprintf(stdout,"%d \n", $1);
+                }
+#line 1120 "exercici3.tab.c"
+    break;
+
+  case 7: /* sentencia: error '\n'  */
+#line 46 "exercici3.y"
                                           {fprintf(stderr,"ERROR EXPRESSIO INCORRECTA Línea %d \n", nlin);
                                             yyerrok;	}
-#line 1113 "exercici2.tab.c"
+#line 1127 "exercici3.tab.c"
     break;
 
-  case 7: /* expr: '(' expr ')'  */
-#line 51 "exercici2.y"
-                                                {strcpy((yyval.oper),(yyvsp[-1].oper));}
-#line 1119 "exercici2.tab.c"
+  case 8: /* expr: '(' expr '*' expr ')'  */
+#line 50 "exercici3.y"
+                                                        {//$$ = $1 * $3;
+												fprintf(stdout, "Sobre parentesis al *\n");}
+#line 1134 "exercici3.tab.c"
     break;
 
-  case 8: /* expr: expr '+' expr  */
-#line 52 "exercici2.y"
-                                                {sprintf((yyval.oper),"%s %s + ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1125 "exercici2.tab.c"
+  case 9: /* expr: '(' expr "mod" expr ')'  */
+#line 52 "exercici3.y"
+                                                        {//$$ = $1 % $3;
+      											fprintf(stdout, "Sobre parentesis al mod\n");}
+#line 1141 "exercici3.tab.c"
     break;
 
-  case 9: /* expr: expr '-' expr  */
-#line 53 "exercici2.y"
-                                                {sprintf((yyval.oper),"%s %s - ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1131 "exercici2.tab.c"
+  case 10: /* expr: '(' expr "div" expr ')'  */
+#line 54 "exercici3.y"
+                                                                {//$$ = $1 / $3;
+      											fprintf(stdout, "Sobre parentesis al div\n");}
+#line 1148 "exercici3.tab.c"
     break;
 
-  case 10: /* expr: expr '*' expr  */
-#line 54 "exercici2.y"
-                                                {sprintf((yyval.oper),"%s %s * ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1137 "exercici2.tab.c"
+  case 11: /* expr: '(' expr ')'  */
+#line 56 "exercici3.y"
+                                                        {//$$ = $2;
+	  }
+#line 1155 "exercici3.tab.c"
     break;
 
-  case 11: /* expr: expr MOD expr  */
-#line 55 "exercici2.y"
-                                              {sprintf((yyval.oper),"%s %s mod ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1143 "exercici2.tab.c"
+  case 12: /* expr: expr '+' expr  */
+#line 58 "exercici3.y"
+                                                {//$$ = $1 + $3;
+      }
+#line 1162 "exercici3.tab.c"
     break;
 
-  case 12: /* expr: expr DIV expr  */
-#line 56 "exercici2.y"
-                                                        {sprintf((yyval.oper),"%s %s div ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1149 "exercici2.tab.c"
+  case 13: /* expr: expr '-' expr  */
+#line 60 "exercici3.y"
+                                                {//$$ = $1 - $3;
+      }
+#line 1169 "exercici3.tab.c"
     break;
 
-  case 13: /* expr: '-' expr  */
-#line 57 "exercici2.y"
-                                                {sprintf((yyval.oper),"-%s", (yyvsp[0].oper));}
-#line 1155 "exercici2.tab.c"
+  case 14: /* expr: expr '*' expr  */
+#line 62 "exercici3.y"
+                                                {//$$ = $1 * $3;
+      }
+#line 1176 "exercici3.tab.c"
     break;
 
-  case 14: /* expr: INT  */
-#line 58 "exercici2.y"
-                                                        {sprintf((yyval.oper),"%d", (yyvsp[0].valor));}
-#line 1161 "exercici2.tab.c"
+  case 15: /* expr: expr "mod" expr  */
+#line 64 "exercici3.y"
+                                                {//$$ = $1 % $3;
+      }
+#line 1183 "exercici3.tab.c"
+    break;
+
+  case 16: /* expr: expr "div" expr  */
+#line 66 "exercici3.y"
+                                                        {//$$ = $1 / $3;
+      }
+#line 1190 "exercici3.tab.c"
+    break;
+
+  case 17: /* expr: '-' expr  */
+#line 68 "exercici3.y"
+                                                {//$$ = - $2;
+      }
+#line 1197 "exercici3.tab.c"
+    break;
+
+  case 18: /* expr: INT  */
+#line 70 "exercici3.y"
+                                                        {//$$ = $1;
+      									fprintf(stdout, "%d ", (yyvsp[0].valor));}
+#line 1204 "exercici3.tab.c"
     break;
 
 
-#line 1165 "exercici2.tab.c"
+#line 1208 "exercici3.tab.c"
 
       default: break;
     }
@@ -1354,7 +1397,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 61 "exercici2.y"
+#line 74 "exercici3.y"
 
 
 /* Called by yyparse on error. */

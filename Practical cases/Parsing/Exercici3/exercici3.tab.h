@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_EXERCICI2_TAB_H_INCLUDED
-# define YY_YY_EXERCICI2_TAB_H_INCLUDED
+#ifndef YY_YY_EXERCICI3_TAB_H_INCLUDED
+# define YY_YY_EXERCICI3_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -56,8 +56,6 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     OPER = 258,                    /* OPER  */
     INT = 259,                     /* INT  */
-    DIV = 260,                     /* DIV  */
-    MOD = 261,                     /* MOD  */
     UMENYS = 262                   /* UMENYS  */
   };
   typedef enum yytokentype yytoken_kind_t;
@@ -67,13 +65,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "exercici2.y"
+#line 24 "exercici3.y"
 	int valor;
 		int opc;
-		char oper[100];
 		
 
-#line 77 "exercici2.tab.h"
+#line 74 "exercici3.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -88,4 +85,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_EXERCICI2_TAB_H_INCLUDED  */
+#endif /* !YY_YY_EXERCICI3_TAB_H_INCLUDED  */
