@@ -73,6 +73,7 @@
 	#include<stdio.h>
 	#include<ctype.h>
 	#include<string.h>
+	#include<stdlib.h>
 	#define MAXLEN 100
 
 	extern int nlin;
@@ -82,7 +83,7 @@
 	
 
 
-#line 86 "exercici2.tab.c"
+#line 87 "exercici2.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -515,8 +516,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    42,    42,    43,    45,    46,    47,    51,    52,    53,
-      54,    55,    56,    57,    58
+       0,    43,    43,    44,    46,    47,    48,    52,    56,    60,
+      64,    68,    72,    76,    80
 };
 #endif
 
@@ -1088,80 +1089,110 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* sufixer: %empty  */
-#line 42 "exercici2.y"
+#line 43 "exercici2.y"
                     {;}
-#line 1094 "exercici2.tab.c"
+#line 1095 "exercici2.tab.c"
     break;
 
   case 4: /* sentencia: '\n'  */
-#line 45 "exercici2.y"
+#line 46 "exercici2.y"
                                         {;}
-#line 1100 "exercici2.tab.c"
+#line 1101 "exercici2.tab.c"
     break;
 
   case 5: /* sentencia: expr ';' '\n'  */
-#line 46 "exercici2.y"
+#line 47 "exercici2.y"
                                                    {fprintf(stdout,"%s \n", (yyvsp[-2].oper));}
-#line 1106 "exercici2.tab.c"
+#line 1107 "exercici2.tab.c"
     break;
 
   case 6: /* sentencia: error '\n'  */
-#line 47 "exercici2.y"
+#line 48 "exercici2.y"
                                           {fprintf(stderr,"ERROR EXPRESSIO INCORRECTA Línea %d \n", nlin);
                                             yyerrok;	}
-#line 1113 "exercici2.tab.c"
+#line 1114 "exercici2.tab.c"
     break;
 
   case 7: /* expr: '(' expr ')'  */
-#line 51 "exercici2.y"
-                                                {strcpy((yyval.oper),(yyvsp[-1].oper));}
-#line 1119 "exercici2.tab.c"
+#line 52 "exercici2.y"
+                                                {
+											(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[-1].oper))));
+											strcpy((yyval.oper),(yyvsp[-1].oper));
+										}
+#line 1123 "exercici2.tab.c"
     break;
 
   case 8: /* expr: expr '+' expr  */
-#line 52 "exercici2.y"
-                                                {sprintf((yyval.oper),"%s %s + ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1125 "exercici2.tab.c"
+#line 56 "exercici2.y"
+                                                {
+      										(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].oper)) + strlen((yyvsp[0].oper)) + 4));
+      										sprintf((yyval.oper),"%s %s +", (yyvsp[-2].oper), (yyvsp[0].oper));
+      									}
+#line 1132 "exercici2.tab.c"
     break;
 
   case 9: /* expr: expr '-' expr  */
-#line 53 "exercici2.y"
-                                                {sprintf((yyval.oper),"%s %s - ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1131 "exercici2.tab.c"
+#line 60 "exercici2.y"
+                                                {
+      										(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].oper)) + strlen((yyvsp[0].oper)) + 4));
+      										sprintf((yyval.oper),"%s %s -", (yyvsp[-2].oper), (yyvsp[0].oper));
+      									}
+#line 1141 "exercici2.tab.c"
     break;
 
   case 10: /* expr: expr '*' expr  */
-#line 54 "exercici2.y"
-                                                {sprintf((yyval.oper),"%s %s * ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1137 "exercici2.tab.c"
+#line 64 "exercici2.y"
+                                                {
+      										(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].oper)) + strlen((yyvsp[0].oper)) + 4));
+      										sprintf((yyval.oper),"%s %s *", (yyvsp[-2].oper), (yyvsp[0].oper));
+      									}
+#line 1150 "exercici2.tab.c"
     break;
 
   case 11: /* expr: expr MOD expr  */
-#line 55 "exercici2.y"
-                                              {sprintf((yyval.oper),"%s %s mod ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1143 "exercici2.tab.c"
+#line 68 "exercici2.y"
+                                                {
+      										(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].oper)) + strlen((yyvsp[0].oper)) + 6));
+      										sprintf((yyval.oper),"%s %s mod", (yyvsp[-2].oper), (yyvsp[0].oper));
+      									}
+#line 1159 "exercici2.tab.c"
     break;
 
   case 12: /* expr: expr DIV expr  */
-#line 56 "exercici2.y"
-                                                        {sprintf((yyval.oper),"%s %s div ", (yyvsp[-2].oper), (yyvsp[0].oper));}
-#line 1149 "exercici2.tab.c"
+#line 72 "exercici2.y"
+                                                        {
+      										(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].oper)) + strlen((yyvsp[0].oper)) + 6));
+      										sprintf((yyval.oper),"%s %s div", (yyvsp[-2].oper), (yyvsp[0].oper));
+      									}
+#line 1168 "exercici2.tab.c"
     break;
 
   case 13: /* expr: '-' expr  */
-#line 57 "exercici2.y"
-                                                {sprintf((yyval.oper),"-%s", (yyvsp[0].oper));}
-#line 1155 "exercici2.tab.c"
+#line 76 "exercici2.y"
+                                                {
+      										(yyval.oper) = (char *) malloc(sizeof(char) * (strlen((yyvsp[0].oper)) + 1));
+      										sprintf((yyval.oper),"-%s", (yyvsp[0].oper));
+      									}
+#line 1177 "exercici2.tab.c"
     break;
 
   case 14: /* expr: INT  */
-#line 58 "exercici2.y"
-                                                        {sprintf((yyval.oper),"%d", (yyvsp[0].valor));}
-#line 1161 "exercici2.tab.c"
+#line 80 "exercici2.y"
+                                                        {
+      										int digits = 1;
+      										int thenum = (yyvsp[0].valor);
+      										while (thenum > 9){
+      											digits += 1;
+      											thenum = thenum / 10;
+      										}
+      										(yyval.oper) = (char *) malloc(sizeof(char) * digits);
+      										sprintf((yyval.oper),"%d", (yyvsp[0].valor));
+      									}
+#line 1192 "exercici2.tab.c"
     break;
 
 
-#line 1165 "exercici2.tab.c"
+#line 1196 "exercici2.tab.c"
 
       default: break;
     }
@@ -1354,7 +1385,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 61 "exercici2.y"
+#line 92 "exercici2.y"
 
 
 /* Called by yyparse on error. */

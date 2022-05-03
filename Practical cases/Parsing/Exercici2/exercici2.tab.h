@@ -67,10 +67,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "exercici2.y"
+#line 27 "exercici2.y"
 	int valor;
 		int opc;
-		char oper[100];
+		char *oper;
 		
 
 #line 77 "exercici2.tab.h"

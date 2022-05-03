@@ -10,6 +10,7 @@
 	#include<stdio.h>
 	#include<ctype.h>
 	#include<string.h>
+	#include<stdlib.h>
 	#define MAXLEN 100
 
 	extern int nlin;
@@ -25,7 +26,7 @@
 
 %union{	int valor;
 		int opc;
-		char oper[100];
+		char *oper;
 		}
 
 %token <opc> OPER
@@ -48,14 +49,44 @@ sentencia  :    '\n' 			{;}
                                             yyerrok;	}
 
          		  ;
-expr  :			'(' expr ')'            {strcpy($$,$2);}
-      |			expr '+' expr           {sprintf($$,"%s %s + ", $1, $3);}
-      |			expr '-' expr           {sprintf($$,"%s %s - ", $1, $3);} 
-      |			expr '*' expr           {sprintf($$,"%s %s * ", $1, $3);}
-      |			expr MOD expr         {sprintf($$,"%s %s mod ", $1, $3);}
-      |			expr DIV expr			{sprintf($$,"%s %s div ", $1, $3);}
-      |			'-' expr %prec UMENYS   {sprintf($$,"-%s", $2);}
-      |			INT                		{sprintf($$,"%d", $1);}
+expr  :			'(' expr ')'            {
+											$$ = (char *) malloc(sizeof(char) * (strlen($2)));
+											strcpy($$,$2);
+										}
+      |			expr '+' expr           {
+      										$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 4));
+      										sprintf($$,"%s %s +", $1, $3);
+      									}
+      |			expr '-' expr           {
+      										$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 4));
+      										sprintf($$,"%s %s -", $1, $3);
+      									}
+      |			expr '*' expr           {
+      										$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 4));
+      										sprintf($$,"%s %s *", $1, $3);
+      									}
+      |			expr MOD expr         	{
+      										$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 6));
+      										sprintf($$,"%s %s mod", $1, $3);
+      									}
+      |			expr DIV expr			{
+      										$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 6));
+      										sprintf($$,"%s %s div", $1, $3);
+      									}
+      |			'-' expr %prec UMENYS   {
+      										$$ = (char *) malloc(sizeof(char) * (strlen($2) + 1));
+      										sprintf($$,"-%s", $2);
+      									}
+      |			INT                		{
+      										int digits = 1;
+      										int thenum = $1;
+      										while (thenum > 9){
+      											digits += 1;
+      											thenum = thenum / 10;
+      										}
+      										$$ = (char *) malloc(sizeof(char) * digits);
+      										sprintf($$,"%d", $1);
+      									}
       ;
 
 %%

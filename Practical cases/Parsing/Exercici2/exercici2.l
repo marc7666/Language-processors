@@ -37,7 +37,7 @@
 									nlin++;
                                     return(yytext[0]);
                                 }
-"div"							{
+("div"|"/")						{
 									return(DIV);
 								}
 "mod"							{
