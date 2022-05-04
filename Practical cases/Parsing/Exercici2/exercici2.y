@@ -11,14 +11,10 @@
 	#include<ctype.h>
 	#include<string.h>
 	#include<stdlib.h>
-	#define MAXLEN 100
 
 	extern int nlin;
     extern int yylex(void);
     void yyerror (char const *);
-    //albert
-	
-
 %}
 	
 
@@ -50,7 +46,7 @@ sentencia  :    '\n' 			{;}
 
          		  ;
 expr  :			'(' expr ')'            {
-											$$ = (char *) malloc(sizeof(char) * (strlen($2)));
+											$$ = (char 	*) malloc(sizeof(char) * (strlen($2)));
 											strcpy($$,$2);
 										}
       |			expr '+' expr           {

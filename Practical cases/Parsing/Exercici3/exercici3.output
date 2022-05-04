@@ -1,85 +1,69 @@
-Hi ha terminal sense usar a la gramàtica
-
-    OPER
-
-
-Estat 24conflictes: 1 shift/reduce
-Estat 32conflictes: 1 shift/reduce
-Estat 33conflictes: 1 shift/reduce
-Estat 34conflictes: 1 shift/reduce
-
-
 Gramàtica
 
-    0 $accept: parenter $end
+    0 $accept: sufixer $end
 
-    1 parenter: ε
-    2         | parenter sentencia
+    1 sufixer: ε
+    2        | sufixer sentencia
 
     3 sentencia: '\n'
-    4          | '(' expr ')' ';' '\n'
-    5          | expr ';' '\n'
-    6          | error '\n'
+    4          | expr ';' '\n'
+    5          | error '\n'
 
-    7 expr: '(' expr '*' expr ')'
-    8     | '(' expr "mod" expr ')'
-    9     | '(' expr "div" expr ')'
-   10     | '(' expr ')'
-   11     | expr '+' expr
-   12     | expr '-' expr
-   13     | expr '*' expr
-   14     | expr "mod" expr
-   15     | expr "div" expr
-   16     | '-' expr
-   17     | INT
+    6 expr: '(' expr ')'
+    7     | expr '+' expr
+    8     | expr '-' expr
+    9     | expr '*' expr
+   10     | expr MOD expr
+   11     | expr DIV expr
+   12     | '-' expr
+   13     | INT
 
 
 Terminals, amb regles on apareixen
 
     $end (0) 0
-    '\n' (10) 3 4 5 6
-    '(' (40) 4 7 8 9 10
-    ')' (41) 4 7 8 9 10
-    '*' (42) 7 13
-    '+' (43) 11
-    '-' (45) 12 16
-    ';' (59) 4 5
-    error (256) 6
-    OPER <opc> (258)
-    INT <valor> (259) 17
-    "div" (260) 9 15
-    "mod" (261) 8 14
-    UMENYS (262)
+    '\n' (10) 3 4 5
+    '(' (40) 6
+    ')' (41) 6
+    '*' (42) 9
+    '+' (43) 7
+    '-' (45) 8 12
+    ';' (59) 4
+    error (256) 5
+    INT <valor> (258) 13
+    DIV (259) 11
+    MOD (260) 10
+    UMENYS (261)
 
 
 No-terminals, amb regles on apareixen
 
-    $accept (15)
+    $accept (14)
         on left: 0
-    parenter <valor> (16)
+    sufixer <exp> (15)
         on left: 1 2
         on right: 0 2
-    sentencia <valor> (17)
-        on left: 3 4 5 6
+    sentencia <exp> (16)
+        on left: 3 4 5
         on right: 2
-    expr <valor> (18)
-        on left: 7 8 9 10 11 12 13 14 15 16 17
-        on right: 4 5 7 8 9 10 11 12 13 14 15 16
+    expr <exp> (17)
+        on left: 6 7 8 9 10 11 12 13
+        on right: 4 6 7 8 9 10 11 12
 
 
 Estat 0
 
-    0 $accept: • parenter $end
+    0 $accept: • sufixer $end
 
-    $default  redueix usant la regla 1 (parenter)
+    $default  redueix usant la regla 1 (sufixer)
 
-    parenter  ves a l'estat 1
+    sufixer  ves a l'estat 1
 
 
 Estat 1
 
-    0 $accept: parenter • $end
-    2 parenter: parenter • sentencia
+    0 $accept: sufixer • $end
+    2 sufixer: sufixer • sentencia
 
     $end   fes un shift, i ves a l'estat 2
     error  fes un shift, i ves a l'estat 3
@@ -94,34 +78,34 @@ Estat 1
 
 Estat 2
 
-    0 $accept: parenter $end •
+    0 $accept: sufixer $end •
 
     $default  accepta
 
 
 Estat 3
 
-    6 sentencia: error • '\n'
+    5 sentencia: error • '\n'
 
     '\n'  fes un shift, i ves a l'estat 10
 
 
 Estat 4
 
-   17 expr: INT •
+   13 expr: INT •
 
-    $default  redueix usant la regla 17 (expr)
+    $default  redueix usant la regla 13 (expr)
 
 
 Estat 5
 
-   16 expr: '-' • expr
+   12 expr: '-' • expr
 
     INT  fes un shift, i ves a l'estat 4
     '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '('  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 12
+    expr  ves a l'estat 11
 
 
 Estat 6
@@ -133,386 +117,214 @@ Estat 6
 
 Estat 7
 
-    4 sentencia: '(' • expr ')' ';' '\n'
-    7 expr: '(' • expr '*' expr ')'
-    8     | '(' • expr "mod" expr ')'
-    9     | '(' • expr "div" expr ')'
-   10     | '(' • expr ')'
+    6 expr: '(' • expr ')'
 
     INT  fes un shift, i ves a l'estat 4
     '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '('  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 13
+    expr  ves a l'estat 12
 
 
 Estat 8
 
-    2 parenter: parenter sentencia •
+    2 sufixer: sufixer sentencia •
 
-    $default  redueix usant la regla 2 (parenter)
+    $default  redueix usant la regla 2 (sufixer)
 
 
 Estat 9
 
-    5 sentencia: expr • ';' '\n'
-   11 expr: expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
+    4 sentencia: expr • ';' '\n'
+    7 expr: expr • '+' expr
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   11     | expr • DIV expr
 
-    '+'    fes un shift, i ves a l'estat 14
-    '-'    fes un shift, i ves a l'estat 15
-    '*'    fes un shift, i ves a l'estat 16
-    "div"  fes un shift, i ves a l'estat 17
-    "mod"  fes un shift, i ves a l'estat 18
-    ';'    fes un shift, i ves a l'estat 19
+    '+'  fes un shift, i ves a l'estat 13
+    '-'  fes un shift, i ves a l'estat 14
+    '*'  fes un shift, i ves a l'estat 15
+    DIV  fes un shift, i ves a l'estat 16
+    MOD  fes un shift, i ves a l'estat 17
+    ';'  fes un shift, i ves a l'estat 18
 
 
 Estat 10
 
-    6 sentencia: error '\n' •
+    5 sentencia: error '\n' •
 
-    $default  redueix usant la regla 6 (sentencia)
+    $default  redueix usant la regla 5 (sentencia)
 
 
 Estat 11
 
-    7 expr: '(' • expr '*' expr ')'
-    8     | '(' • expr "mod" expr ')'
-    9     | '(' • expr "div" expr ')'
-   10     | '(' • expr ')'
+    7 expr: expr • '+' expr
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   11     | expr • DIV expr
+   12     | '-' expr •
 
-    INT  fes un shift, i ves a l'estat 4
-    '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
-
-    expr  ves a l'estat 20
+    $default  redueix usant la regla 12 (expr)
 
 
 Estat 12
 
-   11 expr: expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-   16     | '-' expr •
+    6 expr: '(' expr • ')'
+    7     | expr • '+' expr
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   11     | expr • DIV expr
 
-    $default  redueix usant la regla 16 (expr)
+    '+'  fes un shift, i ves a l'estat 13
+    '-'  fes un shift, i ves a l'estat 14
+    '*'  fes un shift, i ves a l'estat 15
+    DIV  fes un shift, i ves a l'estat 16
+    MOD  fes un shift, i ves a l'estat 17
+    ')'  fes un shift, i ves a l'estat 19
 
 
 Estat 13
 
-    4 sentencia: '(' expr • ')' ';' '\n'
-    7 expr: '(' expr • '*' expr ')'
-    8     | '(' expr • "mod" expr ')'
-    9     | '(' expr • "div" expr ')'
-   10     | '(' expr • ')'
-   11     | expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
+    7 expr: expr '+' • expr
 
-    '+'    fes un shift, i ves a l'estat 14
-    '-'    fes un shift, i ves a l'estat 15
-    '*'    fes un shift, i ves a l'estat 21
-    "div"  fes un shift, i ves a l'estat 22
-    "mod"  fes un shift, i ves a l'estat 23
-    ')'    fes un shift, i ves a l'estat 24
+    INT  fes un shift, i ves a l'estat 4
+    '-'  fes un shift, i ves a l'estat 5
+    '('  fes un shift, i ves a l'estat 7
+
+    expr  ves a l'estat 20
 
 
 Estat 14
 
-   11 expr: expr '+' • expr
+    8 expr: expr '-' • expr
 
     INT  fes un shift, i ves a l'estat 4
     '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '('  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 25
+    expr  ves a l'estat 21
 
 
 Estat 15
 
-   12 expr: expr '-' • expr
+    9 expr: expr '*' • expr
 
     INT  fes un shift, i ves a l'estat 4
     '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '('  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 26
+    expr  ves a l'estat 22
 
 
 Estat 16
 
-   13 expr: expr '*' • expr
+   11 expr: expr DIV • expr
 
     INT  fes un shift, i ves a l'estat 4
     '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '('  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 27
+    expr  ves a l'estat 23
 
 
 Estat 17
 
-   15 expr: expr "div" • expr
+   10 expr: expr MOD • expr
 
     INT  fes un shift, i ves a l'estat 4
     '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '('  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 28
+    expr  ves a l'estat 24
 
 
 Estat 18
 
-   14 expr: expr "mod" • expr
+    4 sentencia: expr ';' • '\n'
 
-    INT  fes un shift, i ves a l'estat 4
-    '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
-
-    expr  ves a l'estat 29
+    '\n'  fes un shift, i ves a l'estat 25
 
 
 Estat 19
 
-    5 sentencia: expr ';' • '\n'
+    6 expr: '(' expr ')' •
 
-    '\n'  fes un shift, i ves a l'estat 30
+    $default  redueix usant la regla 6 (expr)
 
 
 Estat 20
 
-    7 expr: '(' expr • '*' expr ')'
-    8     | '(' expr • "mod" expr ')'
-    9     | '(' expr • "div" expr ')'
-   10     | '(' expr • ')'
-   11     | expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
+    7 expr: expr • '+' expr
+    7     | expr '+' expr •
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   11     | expr • DIV expr
 
-    '+'    fes un shift, i ves a l'estat 14
-    '-'    fes un shift, i ves a l'estat 15
-    '*'    fes un shift, i ves a l'estat 21
-    "div"  fes un shift, i ves a l'estat 22
-    "mod"  fes un shift, i ves a l'estat 23
-    ')'    fes un shift, i ves a l'estat 31
+    '*'  fes un shift, i ves a l'estat 15
+    DIV  fes un shift, i ves a l'estat 16
+    MOD  fes un shift, i ves a l'estat 17
+
+    $default  redueix usant la regla 7 (expr)
 
 
 Estat 21
 
-    7 expr: '(' expr '*' • expr ')'
-   13     | expr '*' • expr
+    7 expr: expr • '+' expr
+    8     | expr • '-' expr
+    8     | expr '-' expr •
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   11     | expr • DIV expr
 
-    INT  fes un shift, i ves a l'estat 4
-    '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
+    '*'  fes un shift, i ves a l'estat 15
+    DIV  fes un shift, i ves a l'estat 16
+    MOD  fes un shift, i ves a l'estat 17
 
-    expr  ves a l'estat 32
+    $default  redueix usant la regla 8 (expr)
 
 
 Estat 22
 
-    9 expr: '(' expr "div" • expr ')'
-   15     | expr "div" • expr
+    7 expr: expr • '+' expr
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+    9     | expr '*' expr •
+   10     | expr • MOD expr
+   11     | expr • DIV expr
 
-    INT  fes un shift, i ves a l'estat 4
-    '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
-
-    expr  ves a l'estat 33
+    $default  redueix usant la regla 9 (expr)
 
 
 Estat 23
 
-    8 expr: '(' expr "mod" • expr ')'
-   14     | expr "mod" • expr
+    7 expr: expr • '+' expr
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   11     | expr • DIV expr
+   11     | expr DIV expr •
 
-    INT  fes un shift, i ves a l'estat 4
-    '-'  fes un shift, i ves a l'estat 5
-    '('  fes un shift, i ves a l'estat 11
-
-    expr  ves a l'estat 34
+    $default  redueix usant la regla 11 (expr)
 
 
 Estat 24
 
-    4 sentencia: '(' expr ')' • ';' '\n'
-   10 expr: '(' expr ')' •
+    7 expr: expr • '+' expr
+    8     | expr • '-' expr
+    9     | expr • '*' expr
+   10     | expr • MOD expr
+   10     | expr MOD expr •
+   11     | expr • DIV expr
 
-    ';'  fes un shift, i ves a l'estat 35
-
-    ';'       [redueix usant la regla 10 (expr)]
     $default  redueix usant la regla 10 (expr)
 
 
 Estat 25
 
-   11 expr: expr • '+' expr
-   11     | expr '+' expr •
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-
-    '*'    fes un shift, i ves a l'estat 16
-    "div"  fes un shift, i ves a l'estat 17
-    "mod"  fes un shift, i ves a l'estat 18
-
-    $default  redueix usant la regla 11 (expr)
-
-
-Estat 26
-
-   11 expr: expr • '+' expr
-   12     | expr • '-' expr
-   12     | expr '-' expr •
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-
-    '*'    fes un shift, i ves a l'estat 16
-    "div"  fes un shift, i ves a l'estat 17
-    "mod"  fes un shift, i ves a l'estat 18
-
-    $default  redueix usant la regla 12 (expr)
-
-
-Estat 27
-
-   11 expr: expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   13     | expr '*' expr •
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-
-    $default  redueix usant la regla 13 (expr)
-
-
-Estat 28
-
-   11 expr: expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-   15     | expr "div" expr •
-
-    $default  redueix usant la regla 15 (expr)
-
-
-Estat 29
-
-   11 expr: expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   14     | expr "mod" expr •
-   15     | expr • "div" expr
-
-    $default  redueix usant la regla 14 (expr)
-
-
-Estat 30
-
-    5 sentencia: expr ';' '\n' •
-
-    $default  redueix usant la regla 5 (sentencia)
-
-
-Estat 31
-
-   10 expr: '(' expr ')' •
-
-    $default  redueix usant la regla 10 (expr)
-
-
-Estat 32
-
-    7 expr: '(' expr '*' expr • ')'
-   11     | expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   13     | expr '*' expr •
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-
-    ')'  fes un shift, i ves a l'estat 36
-
-    ')'       [redueix usant la regla 13 (expr)]
-    $default  redueix usant la regla 13 (expr)
-
-
-Estat 33
-
-    9 expr: '(' expr "div" expr • ')'
-   11     | expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   15     | expr • "div" expr
-   15     | expr "div" expr •
-
-    ')'  fes un shift, i ves a l'estat 37
-
-    ')'       [redueix usant la regla 15 (expr)]
-    $default  redueix usant la regla 15 (expr)
-
-
-Estat 34
-
-    8 expr: '(' expr "mod" expr • ')'
-   11     | expr • '+' expr
-   12     | expr • '-' expr
-   13     | expr • '*' expr
-   14     | expr • "mod" expr
-   14     | expr "mod" expr •
-   15     | expr • "div" expr
-
-    ')'  fes un shift, i ves a l'estat 38
-
-    ')'       [redueix usant la regla 14 (expr)]
-    $default  redueix usant la regla 14 (expr)
-
-
-Estat 35
-
-    4 sentencia: '(' expr ')' ';' • '\n'
-
-    '\n'  fes un shift, i ves a l'estat 39
-
-
-Estat 36
-
-    7 expr: '(' expr '*' expr ')' •
-
-    $default  redueix usant la regla 7 (expr)
-
-
-Estat 37
-
-    9 expr: '(' expr "div" expr ')' •
-
-    $default  redueix usant la regla 9 (expr)
-
-
-Estat 38
-
-    8 expr: '(' expr "mod" expr ')' •
-
-    $default  redueix usant la regla 8 (expr)
-
-
-Estat 39
-
-    4 sentencia: '(' expr ')' ';' '\n' •
+    4 sentencia: expr ';' '\n' •
 
     $default  redueix usant la regla 4 (sentencia)

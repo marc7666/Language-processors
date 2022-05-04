@@ -54,9 +54,10 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    OPER = 258,                    /* OPER  */
-    INT = 259,                     /* INT  */
-    UMENYS = 262                   /* UMENYS  */
+    INT = 258,                     /* INT  */
+    DIV = 259,                     /* DIV  */
+    MOD = 260,                     /* MOD  */
+    UMENYS = 261                   /* UMENYS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -65,12 +66,16 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 24 "exercici3.y"
-	int valor;
-		int opc;
-		
+#line 23 "exercici3.y"
 
-#line 74 "exercici3.tab.h"
+	struct exp_struct {
+		char *expression;
+		int is_parentized;
+		int precedence;
+	} exp;
+	int valor;
+
+#line 79 "exercici3.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
