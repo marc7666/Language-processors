@@ -4,10 +4,15 @@
         /*************************************************/
 
 %{
-	#include "calculadora_registres.tab.h"
+	#include "exercici5.tab.h"
 
 	int nlin=0;
 %}
+
+operators ("or"|"and"|"||"|"&&"|"->"|"<->"|"!")
+delimiters ("("|")")
+separators [ \t]+
+vars [A-Z]+
 
 %option nounput
 %option noinput
@@ -15,9 +20,10 @@
 
 
 %%
-[ \t]+                          ;
+separators                      ;
  
-[a-z]                           {	yylval.reg=yytext[0]-'a'; 		// definim registres amb noms a-z
+vars                           	{	
+									yylval.reg=yytext[0]-'A'; 		// definim registres amb noms a-z
                                 	return(REG);
                                 }
 

@@ -15,7 +15,7 @@
 CC = gcc
 LEX = flex
 YACC = bison
-TARGET=calculadora_registres
+TARGET=exercici5
 CFLAGS = -Wall
 
 ######################################################################

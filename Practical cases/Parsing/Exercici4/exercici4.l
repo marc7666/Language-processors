@@ -1,10 +1,12 @@
         /*************************************************/
         /*               ESPECIFICACIO LEX               */
-        /*          Calculadora amb registres            */
+        /*                   Exercici 4                  */
         /*************************************************/
 
 %{
-	#include "calculadora_registres.tab.h"
+	#include "exercici4.tab.h"
+	#include <stdlib.h>
+	#include <string.h>
 
 	int nlin=0;
 %}
@@ -17,15 +19,16 @@
 %%
 [ \t]+                          ;
  
-[a-z]                           {	yylval.reg=yytext[0]-'a'; 		// definim registres amb noms a-z
-                                	return(REG);
+[a-d]+                          {
+									yylval.reg = (char *) malloc(sizeof(char) * strlen(yytext));
+									strcpy(yylval.reg, yytext);
+									return(REG);	
                                 }
-
-[0-9]+                          {	yylval.valor=atoi(yytext);
-                               	 	 return(INT);
-                                }
-
-\n                             {	nlin++;
+("buida"|"BUIDA")				{
+									return(BUIDA);
+								}
+\n                             	{	
+									nlin++;
                                     return(yytext[0]);
                                 }
 
