@@ -128,7 +128,6 @@ expr  :			'(' expr ')'            { //No s'ha de modificar res, simplement propa
       										int estats_s1 = $1.node_final + 1;
       										int i = 0;
       										for (i = 0; i < $1.sizeof_a; i++){
-	      										printf("%d\n",i);
       											$$.origen[i] = $1.origen[i];
       											$$.caracter[i] = $1.caracter[i];
       											$$.desti[i] = $1.desti[i];
@@ -143,10 +142,45 @@ expr  :			'(' expr ')'            { //No s'ha de modificar res, simplement propa
       											$$.desti[i] = $3.desti[j] + estats_s1;
       											i++;
       										}
-      										$$.node_final = $3.node_final;
+      										$$.node_final = $3.node_final + estats_s1;
       									}
       |			expr '|' expr           { // Expressio expr|expr, vol dir que pot ser o una o l'altra
-      
+      										printf("%d %d\n", $1.sizeof_a, $3.sizeof_a);
+      										$$.node_inicial = 0;
+      										$$.origen = (int *) malloc(($1.sizeof_a + $3.sizeof_a + 4) * sizeof(int));
+      										$$.desti = (int *) malloc(($1.sizeof_a + $3.sizeof_a + 4) * sizeof(int));
+      										$$.caracter = (char *) malloc(($1.sizeof_a + $3.sizeof_a + 4) * sizeof(char));
+      										$$.sizeof_a = $1.sizeof_a + $3.sizeof_a + 4;
+      										int i = 0;
+      										$$.origen[i] = 0;
+      										$$.desti[i] = 1;
+      										$$.caracter[i] = '0';
+      										int estats_s1 = $1.node_final + 1;
+      										for (i = 1; i < $1.sizeof_a + 1; i++){
+      											$$.origen[i] = $1.origen[i-1]+1;
+      											$$.caracter[i] = $1.caracter[i-1];
+      											$$.desti[i] = $1.desti[i-1]+1;
+      										}
+      										$$.origen[i] = 0;
+      										$$.desti[i] = $3.node_inicial+estats_s1+1;
+      										$$.caracter[i] = '0';
+      										i++;
+      										int estats_s3 = $3.node_final + 1;
+      										for (int j = 0; j < $3.sizeof_a; j++){
+      											$$.origen[i] = $3.origen[j] + estats_s1 + 1;
+      											$$.caracter[i] = $3.caracter[j];
+      											$$.desti[i] = $3.desti[j] + estats_s1 + 1;
+      											i++;
+      										}
+      										$$.node_final = estats_s1 + estats_s3 + 1;
+      										$$.origen[i] = estats_s1;
+      										$$.desti[i] = $$.node_final;
+      										$$.caracter[i] = '0';
+      										i++;
+      										$$.origen[i] = $3.node_final + estats_s1 + 1;
+      										$$.desti[i] = $$.node_final;
+      										$$.caracter[i] = '0';
+      										i++;
       									}
       |       	REG               		{	//Expressio tipo a, bc, aab...
       										$$.node_inicial = 0;

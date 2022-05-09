@@ -1,4 +1,5 @@
 ab.(c);
 a?;
 a.buida;
-a*.b;
+a*.b+;
+a|b;

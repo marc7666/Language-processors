@@ -515,7 +515,7 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    50,    50,    51,    53,    54,    62,    68,    71,    90,
-     106,   122,   148,   151,   166
+     106,   122,   147,   185,   200
 };
 #endif
 
@@ -1205,7 +1205,6 @@ yyreduce:
       										int estats_s1 = (yyvsp[-2].expresio).node_final + 1;
       										int i = 0;
       										for (i = 0; i < (yyvsp[-2].expresio).sizeof_a; i++){
-	      										printf("%d\n",i);
       											(yyval.expresio).origen[i] = (yyvsp[-2].expresio).origen[i];
       											(yyval.expresio).caracter[i] = (yyvsp[-2].expresio).caracter[i];
       											(yyval.expresio).desti[i] = (yyvsp[-2].expresio).desti[i];
@@ -1220,21 +1219,56 @@ yyreduce:
       											(yyval.expresio).desti[i] = (yyvsp[0].expresio).desti[j] + estats_s1;
       											i++;
       										}
-      										(yyval.expresio).node_final = (yyvsp[0].expresio).node_final;
+      										(yyval.expresio).node_final = (yyvsp[0].expresio).node_final + estats_s1;
       									}
-#line 1226 "exercici4.tab.c"
+#line 1225 "exercici4.tab.c"
     break;
 
   case 12: /* expr: expr '|' expr  */
-#line 148 "exercici4.y"
+#line 147 "exercici4.y"
                                                 { // Expressio expr|expr, vol dir que pot ser o una o l'altra
-      
+      										printf("%d %d\n", (yyvsp[-2].expresio).sizeof_a, (yyvsp[0].expresio).sizeof_a);
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4) * sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4) * sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4) * sizeof(char));
+      										(yyval.expresio).sizeof_a = (yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4;
+      										int i = 0;
+      										(yyval.expresio).origen[i] = 0;
+      										(yyval.expresio).desti[i] = 1;
+      										(yyval.expresio).caracter[i] = '0';
+      										int estats_s1 = (yyvsp[-2].expresio).node_final + 1;
+      										for (i = 1; i < (yyvsp[-2].expresio).sizeof_a + 1; i++){
+      											(yyval.expresio).origen[i] = (yyvsp[-2].expresio).origen[i-1]+1;
+      											(yyval.expresio).caracter[i] = (yyvsp[-2].expresio).caracter[i-1];
+      											(yyval.expresio).desti[i] = (yyvsp[-2].expresio).desti[i-1]+1;
+      										}
+      										(yyval.expresio).origen[i] = 0;
+      										(yyval.expresio).desti[i] = (yyvsp[0].expresio).node_inicial+estats_s1+1;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
+      										int estats_s3 = (yyvsp[0].expresio).node_final + 1;
+      										for (int j = 0; j < (yyvsp[0].expresio).sizeof_a; j++){
+      											(yyval.expresio).origen[i] = (yyvsp[0].expresio).origen[j] + estats_s1 + 1;
+      											(yyval.expresio).caracter[i] = (yyvsp[0].expresio).caracter[j];
+      											(yyval.expresio).desti[i] = (yyvsp[0].expresio).desti[j] + estats_s1 + 1;
+      											i++;
+      										}
+      										(yyval.expresio).node_final = estats_s1 + estats_s3 + 1;
+      										(yyval.expresio).origen[i] = estats_s1;
+      										(yyval.expresio).desti[i] = (yyval.expresio).node_final;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
+      										(yyval.expresio).origen[i] = (yyvsp[0].expresio).node_final + estats_s1 + 1;
+      										(yyval.expresio).desti[i] = (yyval.expresio).node_final;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
       									}
-#line 1234 "exercici4.tab.c"
+#line 1268 "exercici4.tab.c"
     break;
 
   case 13: /* expr: REG  */
-#line 151 "exercici4.y"
+#line 185 "exercici4.y"
                                                 {	//Expressio tipo a, bc, aab...
       										(yyval.expresio).node_inicial = 0;
       										(yyval.expresio).origen = (int *) malloc(sizeof(int) * strlen((yyvsp[0].reg)));
@@ -1250,11 +1284,11 @@ yyreduce:
       										}
       										(yyval.expresio).node_final = contador_origen;
       									}
-#line 1254 "exercici4.tab.c"
+#line 1288 "exercici4.tab.c"
     break;
 
   case 14: /* expr: BUIDA  */
-#line 166 "exercici4.y"
+#line 200 "exercici4.y"
                                                                 {
       										(yyval.expresio).node_inicial = 0;
       										(yyval.expresio).node_final = 0;
@@ -1266,11 +1300,11 @@ yyreduce:
       										(yyval.expresio).desti[0] = 0;
       										(yyval.expresio).caracter[0] = '0';
       									}
-#line 1270 "exercici4.tab.c"
+#line 1304 "exercici4.tab.c"
     break;
 
 
-#line 1274 "exercici4.tab.c"
+#line 1308 "exercici4.tab.c"
 
       default: break;
     }
@@ -1463,7 +1497,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 179 "exercici4.y"
+#line 213 "exercici4.y"
 
 
 /* Called by yyparse on error. */
