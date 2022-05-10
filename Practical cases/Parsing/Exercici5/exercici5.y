@@ -9,8 +9,6 @@
 	
 	#include<stdio.h>
 	#include<ctype.h>
-    
-    int regs[26]={0};
 	
 	extern int nlin;
     extern int yylex(void);
@@ -23,20 +21,20 @@
 
 %start calculadora
 
-%union{	int valor;
-		int reg;
-		}
+%union{
+	char optipus;
+	char reg;
+	char *expression;
+}
 
+%token <optipus> OPERADOR
 %token <reg> REG
-%token <valor> INT
 
-%left '|'
-%left '&'
-%left '+' '-'
-%left '*' '/' '%'
+
+%left OPERADOR
 %left UMENYS        /* precedencia de l'operador unari menys */
 
-%type <valor> expr  sentencia calculadora
+%type <expression> expr  sentencia calculadora
 
 %%
 
@@ -44,28 +42,31 @@ calculadora	:           {;}
        			 |       calculadora sentencia
        			 ;
 sentencia  :    '\n' 			{;}
-                |	expr '\n'             {fprintf(stdout,"%d \n", $1);}
-                |    REG '=' expr '\n'    {regs[$1] = $3;}
+                |	expr ';' '\n'             {fprintf(stdout,"%s \n", $1);}
                 |    error '\n'           {fprintf(stderr,"ERROR EXPRESSIO INCORRECTA Línea %d \n", nlin);
                                             yyerrok;	}
 
          		  ;
-expr  :        '(' expr ')'             {$$ = $2;}
-      |        expr '+' expr            {$$ = $1 + $3;}
-      |        expr '-' expr            {$$ = $1 - $3;} 
-      |        expr '*' expr            {$$ = $1 * $3;}
-      |        expr '/' expr            {if ($3)
-                                          $$ = $1 / $3;
-                                         else
-                                          {fprintf(stderr,"Divisio per zero \n");
-                                           YYERROR;}
-                                          }
-      |       expr '%' expr           {$$ = $1 % $3;}
-      |       expr '&' expr           {$$ = $1 & $3;}
-      |       expr '|' expr           {$$ = $1 | $3;}
-      |       '-' expr %prec UMENYS   {$$ = - $2;}
-      |       REG                  {$$ = regs[$1];}
-      |       INT                {$$ = $1;}
+expr  :       expr OPERADOR expr		{
+											if($2 == "-"){
+												$$ = (char *) malloc(sizeof(char) * (strlen($2) + 5));
+      											sprintf($$,"!%s or %s",$1, $3);
+											}else if ($2 == "<"){
+												
+											}else{
+												// Que printi el OPERADOR que toque
+												$$ = (char *) malloc(sizeof(char) * (strlen($2) + 5));
+      											sprintf($$,"%s or %s",$1, $3);
+											}
+										}
+      |       '!' expr %prec UMENYS   	{	
+      										$$ = (char *) malloc(sizeof(char) * (strlen($2) + 1));
+      										sprintf($$,"!%s",$2);
+      									}
+      |       REG                  		{
+      										$$ = (char *) malloc(sizeof(char));
+      										sprintf($$,"%c",$1);
+      									}
       ;
 
 %%

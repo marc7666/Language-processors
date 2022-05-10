@@ -5,26 +5,18 @@
 
 %{
 	#include <string.h>
-	int character_err = 0;
+	#include <stdlib.h>
+	
 	int lines = 0;
-	char error[24];
 	int cn = 0;
 %}
 
-operators ("or"|"and"|"||"|"&&"|"->"|"<->"|"!")
+operators ("or"|"and"|"||"|"&&"|"->"|"<->")
 separators [ \t]+
 vars [A-Z]+
 
 %%
 
-^(.+|\n)			{
-						if (cn == 0){
-							printf("Line: %i - ", lines);
-							character_err = 0;
-							cn = 1;
-						}
-						REJECT;
-					}
 "#"					{	
 						BEGIN(inside_comment);
 						ECHO;
@@ -44,12 +36,12 @@ vars [A-Z]+
 						BEGIN(0);
 					}
 {operators}		{
+								yylval.optipus = yytext[0];
                                 return(OPERATOR);
                         }
 {separators}	{;}
 {vars}			{
-					character_err += strlen(yytext);
-                                        return(REG);
+                	return(REG);
 				}
 \n				{
 					lines += 1;
