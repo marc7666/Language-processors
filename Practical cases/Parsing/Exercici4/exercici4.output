@@ -17,6 +17,7 @@ Gramàtica
    11     | expr '|' expr
    12     | REG
    13     | BUIDA
+   14     | RANG
 
 
 Terminals, amb regles on apareixen
@@ -34,20 +35,21 @@ Terminals, amb regles on apareixen
     error (256) 5
     REG <reg> (258) 12
     BUIDA <val> (259) 13
+    RANG <rangg> (260) 14
 
 
 No-terminals, amb regles on apareixen
 
-    $accept (14)
+    $accept (15)
         on left: 0
-    expresions <expresio> (15)
+    expresions <expresio> (16)
         on left: 1 2
         on right: 0 2
-    sentencia <expresio> (16)
+    sentencia <expresio> (17)
         on left: 3 4 5
         on right: 2
-    expr <expresio> (17)
-        on left: 6 7 8 9 10 11 12 13
+    expr <expresio> (18)
+        on left: 6 7 8 9 10 11 12 13 14
         on right: 4 6 7 8 9 10 11
 
 
@@ -69,11 +71,12 @@ Estat 1
     error  fes un shift, i ves a l'estat 3
     REG    fes un shift, i ves a l'estat 4
     BUIDA  fes un shift, i ves a l'estat 5
-    '\n'   fes un shift, i ves a l'estat 6
-    '('    fes un shift, i ves a l'estat 7
+    RANG   fes un shift, i ves a l'estat 6
+    '\n'   fes un shift, i ves a l'estat 7
+    '('    fes un shift, i ves a l'estat 8
 
-    sentencia  ves a l'estat 8
-    expr       ves a l'estat 9
+    sentencia  ves a l'estat 9
+    expr       ves a l'estat 10
 
 
 Estat 2
@@ -87,7 +90,7 @@ Estat 3
 
     5 sentencia: error • '\n'
 
-    '\n'  fes un shift, i ves a l'estat 10
+    '\n'  fes un shift, i ves a l'estat 11
 
 
 Estat 4
@@ -106,30 +109,38 @@ Estat 5
 
 Estat 6
 
+   14 expr: RANG •
+
+    $default  redueix usant la regla 14 (expr)
+
+
+Estat 7
+
     3 sentencia: '\n' •
 
     $default  redueix usant la regla 3 (sentencia)
 
 
-Estat 7
+Estat 8
 
     6 expr: '(' • expr ')'
 
     REG    fes un shift, i ves a l'estat 4
     BUIDA  fes un shift, i ves a l'estat 5
-    '('    fes un shift, i ves a l'estat 7
+    RANG   fes un shift, i ves a l'estat 6
+    '('    fes un shift, i ves a l'estat 8
 
-    expr  ves a l'estat 11
+    expr  ves a l'estat 12
 
 
-Estat 8
+Estat 9
 
     2 expresions: expresions sentencia •
 
     $default  redueix usant la regla 2 (expresions)
 
 
-Estat 9
+Estat 10
 
     4 sentencia: expr • ';' '\n'
     7 expr: expr • '*'
@@ -138,22 +149,22 @@ Estat 9
    10     | expr • '.' expr
    11     | expr • '|' expr
 
-    '|'  fes un shift, i ves a l'estat 12
-    '.'  fes un shift, i ves a l'estat 13
-    '*'  fes un shift, i ves a l'estat 14
-    '+'  fes un shift, i ves a l'estat 15
-    '?'  fes un shift, i ves a l'estat 16
-    ';'  fes un shift, i ves a l'estat 17
+    '|'  fes un shift, i ves a l'estat 13
+    '.'  fes un shift, i ves a l'estat 14
+    '*'  fes un shift, i ves a l'estat 15
+    '+'  fes un shift, i ves a l'estat 16
+    '?'  fes un shift, i ves a l'estat 17
+    ';'  fes un shift, i ves a l'estat 18
 
 
-Estat 10
+Estat 11
 
     5 sentencia: error '\n' •
 
     $default  redueix usant la regla 5 (sentencia)
 
 
-Estat 11
+Estat 12
 
     6 expr: '(' expr • ')'
     7     | expr • '*'
@@ -162,86 +173,71 @@ Estat 11
    10     | expr • '.' expr
    11     | expr • '|' expr
 
-    '|'  fes un shift, i ves a l'estat 12
-    '.'  fes un shift, i ves a l'estat 13
-    '*'  fes un shift, i ves a l'estat 14
-    '+'  fes un shift, i ves a l'estat 15
-    '?'  fes un shift, i ves a l'estat 16
-    ')'  fes un shift, i ves a l'estat 18
+    '|'  fes un shift, i ves a l'estat 13
+    '.'  fes un shift, i ves a l'estat 14
+    '*'  fes un shift, i ves a l'estat 15
+    '+'  fes un shift, i ves a l'estat 16
+    '?'  fes un shift, i ves a l'estat 17
+    ')'  fes un shift, i ves a l'estat 19
 
 
-Estat 12
+Estat 13
 
    11 expr: expr '|' • expr
 
     REG    fes un shift, i ves a l'estat 4
     BUIDA  fes un shift, i ves a l'estat 5
-    '('    fes un shift, i ves a l'estat 7
-
-    expr  ves a l'estat 19
-
-
-Estat 13
-
-   10 expr: expr '.' • expr
-
-    REG    fes un shift, i ves a l'estat 4
-    BUIDA  fes un shift, i ves a l'estat 5
-    '('    fes un shift, i ves a l'estat 7
+    RANG   fes un shift, i ves a l'estat 6
+    '('    fes un shift, i ves a l'estat 8
 
     expr  ves a l'estat 20
 
 
 Estat 14
 
+   10 expr: expr '.' • expr
+
+    REG    fes un shift, i ves a l'estat 4
+    BUIDA  fes un shift, i ves a l'estat 5
+    RANG   fes un shift, i ves a l'estat 6
+    '('    fes un shift, i ves a l'estat 8
+
+    expr  ves a l'estat 21
+
+
+Estat 15
+
     7 expr: expr '*' •
 
     $default  redueix usant la regla 7 (expr)
 
 
-Estat 15
+Estat 16
 
     8 expr: expr '+' •
 
     $default  redueix usant la regla 8 (expr)
 
 
-Estat 16
+Estat 17
 
     9 expr: expr '?' •
 
     $default  redueix usant la regla 9 (expr)
 
 
-Estat 17
+Estat 18
 
     4 sentencia: expr ';' • '\n'
 
-    '\n'  fes un shift, i ves a l'estat 21
-
-
-Estat 18
-
-    6 expr: '(' expr ')' •
-
-    $default  redueix usant la regla 6 (expr)
+    '\n'  fes un shift, i ves a l'estat 22
 
 
 Estat 19
 
-    7 expr: expr • '*'
-    8     | expr • '+'
-    9     | expr • '?'
-   10     | expr • '.' expr
-   11     | expr • '|' expr
-   11     | expr '|' expr •
+    6 expr: '(' expr ')' •
 
-    '.'  fes un shift, i ves a l'estat 13
-    '*'  fes un shift, i ves a l'estat 14
-    '+'  fes un shift, i ves a l'estat 15
-    '?'  fes un shift, i ves a l'estat 16
-
-    $default  redueix usant la regla 11 (expr)
+    $default  redueix usant la regla 6 (expr)
 
 
 Estat 20
@@ -250,17 +246,34 @@ Estat 20
     8     | expr • '+'
     9     | expr • '?'
    10     | expr • '.' expr
+   11     | expr • '|' expr
+   11     | expr '|' expr •
+
+    '.'  fes un shift, i ves a l'estat 14
+    '*'  fes un shift, i ves a l'estat 15
+    '+'  fes un shift, i ves a l'estat 16
+    '?'  fes un shift, i ves a l'estat 17
+
+    $default  redueix usant la regla 11 (expr)
+
+
+Estat 21
+
+    7 expr: expr • '*'
+    8     | expr • '+'
+    9     | expr • '?'
+   10     | expr • '.' expr
    10     | expr '.' expr •
    11     | expr • '|' expr
 
-    '*'  fes un shift, i ves a l'estat 14
-    '+'  fes un shift, i ves a l'estat 15
-    '?'  fes un shift, i ves a l'estat 16
+    '*'  fes un shift, i ves a l'estat 15
+    '+'  fes un shift, i ves a l'estat 16
+    '?'  fes un shift, i ves a l'estat 17
 
     $default  redueix usant la regla 10 (expr)
 
 
-Estat 21
+Estat 22
 
     4 sentencia: expr ';' '\n' •
 

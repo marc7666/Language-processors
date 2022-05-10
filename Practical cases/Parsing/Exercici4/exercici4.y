@@ -34,10 +34,14 @@
 		} expresio;
 		char *reg;
 		char val;
-		}
-
+		struct rang_struct {
+			char inicial;
+			char final;
+		} rangg;
+	}
 %token <reg> REG
 %token <val> BUIDA
+%token <rangg> RANG
 
 %left '|'
 %left '.'
@@ -145,7 +149,6 @@ expr  :			'(' expr ')'            { //No s'ha de modificar res, simplement propa
       										$$.node_final = $3.node_final + estats_s1;
       									}
       |			expr '|' expr           { // Expressio expr|expr, vol dir que pot ser o una o l'altra
-      										printf("%d %d\n", $1.sizeof_a, $3.sizeof_a);
       										$$.node_inicial = 0;
       										$$.origen = (int *) malloc(($1.sizeof_a + $3.sizeof_a + 4) * sizeof(int));
       										$$.desti = (int *) malloc(($1.sizeof_a + $3.sizeof_a + 4) * sizeof(int));
@@ -207,6 +210,29 @@ expr  :			'(' expr ')'            { //No s'ha de modificar res, simplement propa
       										$$.origen[0] = 0;
       										$$.desti[0] = 0;
       										$$.caracter[0] = '0';
+      									}
+      |			RANG					{
+      										$$.node_inicial = 0;
+      										$$.node_final = 1;
+      										$$.sizeof_a = ($1.final - $1.inicial);
+      										if ($$.sizeof_a <= 0){
+      											$$.sizeof_a = 1;
+      											$$.origen = (int *) malloc(sizeof(int) * $$.sizeof_a);
+		  										$$.desti = (int *) malloc(sizeof(int) * $$.sizeof_a);
+		  										$$.caracter = (char *) malloc(sizeof(char) * $$.sizeof_a);
+		  										$$.origen[0] = 0;
+		  										$$.desti[0] = 1;
+		  										$$.caracter[0] = '0';
+      										}else{
+      											$$.origen = (int *) malloc(sizeof(int) * $$.sizeof_a);
+		  										$$.desti = (int *) malloc(sizeof(int) * $$.sizeof_a);
+		  										$$.caracter = (char *) malloc(sizeof(char) * $$.sizeof_a);
+		  										for(int i = 0; i < $$.sizeof_a; i++){
+			  										$$.origen[i] = 0;
+			  										$$.desti[i] = 1;
+		  											$$.caracter[i] = $1.inicial+i;
+		  										}
+		  									}
       									}
       ;
 

@@ -55,7 +55,8 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     REG = 258,                     /* REG  */
-    BUIDA = 259                    /* BUIDA  */
+    BUIDA = 259,                   /* BUIDA  */
+    RANG = 260                     /* RANG  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -75,9 +76,13 @@ union YYSTYPE
 		} expresio;
 		char *reg;
 		char val;
-		
+		struct rang_struct {
+			char inicial;
+			char final;
+		} rangg;
+	
 
-#line 81 "exercici4.tab.h"
+#line 86 "exercici4.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -2,4 +2,6 @@ ab.(c);
 a?;
 a.buida;
 a*.b+;
+# Kyoka
 a|b;
+[a-g]*;

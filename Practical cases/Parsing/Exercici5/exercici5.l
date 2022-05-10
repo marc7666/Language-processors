@@ -25,7 +25,7 @@ vars [A-Z]+
 						}
 						REJECT;
 					}
-"--"				{	
+"#"					{	
 						BEGIN(inside_comment);
 						ECHO;
 					}
