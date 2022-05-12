@@ -9,12 +9,12 @@
 	
 	#include<stdio.h>
 	#include<ctype.h>
+	#include<string.h>
+	#include<stdlib.h>
 	
 	extern int nlin;
     extern int yylex(void);
     void yyerror (char const *);
-
-	
 
 %}
 	
@@ -47,16 +47,27 @@ sentencia  :    '\n' 			{;}
                                             yyerrok;	}
 
          		  ;
-expr  :       expr OPERADOR expr		{
-											if($2 == "-"){
-												$$ = (char *) malloc(sizeof(char) * (strlen($2) + 5));
+expr  :  '(' expr ')'			{	
+									$$ = (char *) malloc(sizeof(char) * (strlen($2) + 2));
+									sprintf($$,"(%s)",$2);
+								}     
+	  |  expr OPERADOR expr		{
+											if($2 == '-'){
+												$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 5));
       											sprintf($$,"!%s or %s",$1, $3);
-											}else if ($2 == "<"){
-												
+											}else if ($2 == '<'){
+												$$ = (char *) malloc(sizeof(char) * (strlen($1) * 2 + strlen($3) * 2 + 19));
+      											sprintf($$,"(!%s or %s) and (!%s or %s)",$1, $3, $3, $1);
 											}else{
 												// Que printi el OPERADOR que toque
-												$$ = (char *) malloc(sizeof(char) * (strlen($2) + 5));
-      											sprintf($$,"%s or %s",$1, $3);
+												if ($2 == 'o' || $2 == '|'){
+													$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 4));
+	      											sprintf($$,"%s or %s",$1, $3);
+												}else if($2 == 'a' || $2 == '&'){
+													$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 5));
+	      											sprintf($$,"%s and %s",$1, $3);
+												}
+												
 											}
 										}
       |       '!' expr %prec UMENYS   	{	
@@ -80,9 +91,6 @@ void yyerror (char const *s){
 int main(){
         
     if (yyparse()==0){
-        for (int i=0; i<26; i++)
-        if (regs[i]!=0)
-        printf("%c = %d \n", 'a'+i, regs[i]);
         return(0);
     }
     else

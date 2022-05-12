@@ -10,14 +10,10 @@
 	#include<stdio.h>
 	#include<ctype.h>
 	#include<string.h>
-    
-    int regs[26]={0};
 	
 	extern int nlin;
     extern int yylex(void);
     void yyerror (char const *);
-
-	
 
 %}
 	
