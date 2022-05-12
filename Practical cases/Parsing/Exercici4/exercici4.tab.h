@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_EXERCICI3_TAB_H_INCLUDED
-# define YY_YY_EXERCICI3_TAB_H_INCLUDED
+#ifndef YY_YY_EXERCICI4_TAB_H_INCLUDED
+# define YY_YY_EXERCICI4_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -54,10 +54,9 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    INT = 258,                     /* INT  */
-    DIV = 259,                     /* DIV  */
-    MOD = 260,                     /* MOD  */
-    UMENYS = 261                   /* UMENYS  */
+    REG = 258,                     /* REG  */
+    BUIDA = 259,                   /* BUIDA  */
+    RANG = 260                     /* RANG  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -66,16 +65,24 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 23 "exercici3.y"
+#line 27 "exercici4.y"
+	struct expresio_struct {
+			int node_inicial;
+			int node_final;
+			int sizeof_a;
+			int *origen;
+			int *desti;
+			char *caracter;
+		} expresio;
+		char *reg;
+		char val;
+		struct rang_struct {
+			char inicial;
+			char final;
+		} rangg;
+	
 
-	struct exp_struct {
-		char *expression;
-		int is_parentized;
-		int precedence;
-	} exp;
-	int valor;
-
-#line 79 "exercici3.tab.h"
+#line 86 "exercici4.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -90,4 +97,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_EXERCICI3_TAB_H_INCLUDED  */
+#endif /* !YY_YY_EXERCICI4_TAB_H_INCLUDED  */

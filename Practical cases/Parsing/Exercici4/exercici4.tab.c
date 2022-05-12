@@ -67,19 +67,23 @@
 
 
 /* First part of user prologue.  */
-#line 8 "exercici3.y"
+#line 8 "exercici4.y"
 
 	
 	#include<stdio.h>
 	#include<ctype.h>
 	#include<string.h>
-	#include<stdlib.h>
-
+    
+    int regs[26]={0};
+	
 	extern int nlin;
     extern int yylex(void);
     void yyerror (char const *);
 
-#line 83 "exercici3.tab.c"
+	
+
+
+#line 87 "exercici4.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -102,7 +106,7 @@
 #  endif
 # endif
 
-#include "exercici3.tab.h"
+#include "exercici4.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -110,21 +114,22 @@ enum yysymbol_kind_t
   YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
-  YYSYMBOL_INT = 3,                        /* INT  */
-  YYSYMBOL_4_ = 4,                         /* '+'  */
-  YYSYMBOL_5_ = 5,                         /* '-'  */
-  YYSYMBOL_6_ = 6,                         /* '*'  */
-  YYSYMBOL_DIV = 7,                        /* DIV  */
-  YYSYMBOL_MOD = 8,                        /* MOD  */
-  YYSYMBOL_UMENYS = 9,                     /* UMENYS  */
-  YYSYMBOL_10_n_ = 10,                     /* '\n'  */
-  YYSYMBOL_11_ = 11,                       /* ';'  */
-  YYSYMBOL_12_ = 12,                       /* '('  */
-  YYSYMBOL_13_ = 13,                       /* ')'  */
-  YYSYMBOL_YYACCEPT = 14,                  /* $accept  */
-  YYSYMBOL_sufixer = 15,                   /* sufixer  */
-  YYSYMBOL_sentencia = 16,                 /* sentencia  */
-  YYSYMBOL_expr = 17                       /* expr  */
+  YYSYMBOL_REG = 3,                        /* REG  */
+  YYSYMBOL_BUIDA = 4,                      /* BUIDA  */
+  YYSYMBOL_RANG = 5,                       /* RANG  */
+  YYSYMBOL_6_ = 6,                         /* '|'  */
+  YYSYMBOL_7_ = 7,                         /* '.'  */
+  YYSYMBOL_8_ = 8,                         /* '*'  */
+  YYSYMBOL_9_ = 9,                         /* '+'  */
+  YYSYMBOL_10_ = 10,                       /* '?'  */
+  YYSYMBOL_11_n_ = 11,                     /* '\n'  */
+  YYSYMBOL_12_ = 12,                       /* ';'  */
+  YYSYMBOL_13_ = 13,                       /* '('  */
+  YYSYMBOL_14_ = 14,                       /* ')'  */
+  YYSYMBOL_YYACCEPT = 15,                  /* $accept  */
+  YYSYMBOL_expresions = 16,                /* expresions  */
+  YYSYMBOL_sentencia = 17,                 /* sentencia  */
+  YYSYMBOL_expr = 18                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -452,19 +457,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   43
+#define YYLAST   36
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  14
+#define YYNTOKENS  15
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  14
+#define YYNRULES  15
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  26
+#define YYNSTATES  23
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   261
+#define YYMAXUTOK   260
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -479,21 +484,18 @@ union yyalloc
 static const yytype_int8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      10,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      11,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      12,    13,     6,     4,     2,     5,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    11,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      13,    14,     8,     9,     2,     2,     7,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    12,
+       2,     2,     2,    10,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     6,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -503,16 +505,19 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3,     7,
-       8,     9
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    43,    45,    46,    47,    51,    57,    63,
-      69,    97,   125,   153,   173
+       0,    54,    54,    55,    57,    58,    66,    72,    75,    94,
+     110,   126,   151,   188,   203,   214
 };
 #endif
 
@@ -528,9 +533,9 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "INT", "'+'", "'-'",
-  "'*'", "DIV", "MOD", "UMENYS", "'\\n'", "';'", "'('", "')'", "$accept",
-  "sufixer", "sentencia", "expr", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "REG", "BUIDA", "RANG",
+  "'|'", "'.'", "'*'", "'+'", "'?'", "'\\n'", "';'", "'('", "')'",
+  "$accept", "expresions", "sentencia", "expr", YY_NULLPTR
 };
 
 static const char *
@@ -554,9 +559,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -10,    13,   -10,    -9,   -10,    12,   -10,    12,   -10,    32,
-     -10,   -10,    22,    12,    12,    12,    12,    12,    -4,   -10,
-      -3,    -3,   -10,   -10,   -10,   -10
+     -10,     0,   -10,    -9,   -10,   -10,   -10,   -10,     3,   -10,
+      20,   -10,    11,     3,     3,   -10,   -10,   -10,    -1,   -10,
+      26,    14,   -10
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -564,21 +569,21 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1,     0,    14,     0,     4,     0,     3,     0,
-       6,    13,     0,     0,     0,     0,     0,     0,     0,     7,
-       8,     9,    10,    12,    11,     5
+       2,     0,     1,     0,    13,    14,    15,     4,     0,     3,
+       0,     6,     0,     0,     0,     8,     9,    10,     0,     7,
+      12,    11,     5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,   -10,   -10,    -5
+     -10,   -10,   -10,     1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     1,     8,     9
+       0,     1,     9,    10
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -586,43 +591,41 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      11,    10,    12,    15,    16,    17,    25,     0,    20,    21,
-      22,    23,    24,     2,     3,     4,     4,     5,     5,     0,
-       0,     0,     0,     6,     7,     7,    13,    14,    15,    16,
-      17,     0,     0,     0,     0,    19,    13,    14,    15,    16,
-      17,     0,     0,    18
+       2,     3,    11,     4,     5,     6,     4,     5,     6,    12,
+      22,     7,     0,     8,    20,    21,     8,    13,    14,    15,
+      16,    17,    15,    16,    17,    19,    13,    14,    15,    16,
+      17,     0,    18,    14,    15,    16,    17
 };
 
 static const yytype_int8 yycheck[] =
 {
-       5,    10,     7,     6,     7,     8,    10,    -1,    13,    14,
-      15,    16,    17,     0,     1,     3,     3,     5,     5,    -1,
-      -1,    -1,    -1,    10,    12,    12,     4,     5,     6,     7,
-       8,    -1,    -1,    -1,    -1,    13,     4,     5,     6,     7,
-       8,    -1,    -1,    11
+       0,     1,    11,     3,     4,     5,     3,     4,     5,     8,
+      11,    11,    -1,    13,    13,    14,    13,     6,     7,     8,
+       9,    10,     8,     9,    10,    14,     6,     7,     8,     9,
+      10,    -1,    12,     7,     8,     9,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    15,     0,     1,     3,     5,    10,    12,    16,    17,
-      10,    17,    17,     4,     5,     6,     7,     8,    11,    13,
-      17,    17,    17,    17,    17,    10
+       0,    16,     0,     1,     3,     4,     5,    11,    13,    17,
+      18,    11,    18,     6,     7,     8,     9,    10,    12,    14,
+      18,    18,    11
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    14,    15,    15,    16,    16,    16,    17,    17,    17,
-      17,    17,    17,    17,    17
+       0,    15,    16,    16,    17,    17,    17,    18,    18,    18,
+      18,    18,    18,    18,    18,    18
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     2,     1,     3,     2,     3,     3,     3,
-       3,     3,     3,     2,     1
+       0,     2,     0,     2,     1,     3,     2,     3,     2,     2,
+       2,     3,     3,     1,     1,     1
 };
 
 
@@ -1085,205 +1088,252 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2: /* sufixer: %empty  */
-#line 42 "exercici3.y"
-                    {;}
-#line 1092 "exercici3.tab.c"
+  case 2: /* expresions: %empty  */
+#line 54 "exercici4.y"
+                            {;}
+#line 1095 "exercici4.tab.c"
     break;
 
   case 4: /* sentencia: '\n'  */
-#line 45 "exercici3.y"
+#line 57 "exercici4.y"
                                         {;}
-#line 1098 "exercici3.tab.c"
+#line 1101 "exercici4.tab.c"
     break;
 
   case 5: /* sentencia: expr ';' '\n'  */
-#line 46 "exercici3.y"
-                                                   {fprintf(stdout,"%s \n", (yyvsp[-2].exp).expression);}
-#line 1104 "exercici3.tab.c"
+#line 58 "exercici4.y"
+                                                {
+                							for(int i = 0; i < (yyvsp[-2].expresio).sizeof_a;i++){
+                								printf("%d, %c: %d\n", (yyvsp[-2].expresio).origen[i], (yyvsp[-2].expresio).caracter[i], (yyvsp[-2].expresio).desti[i]);
+                							}
+                							printf("ESTAT INICIAL: %d\n", (yyvsp[-2].expresio).node_inicial);
+                							printf("ESTAT FINAL: %d\n", (yyvsp[-2].expresio).node_final);
+                							printf("____________________\n");
+                						}
+#line 1114 "exercici4.tab.c"
     break;
 
   case 6: /* sentencia: error '\n'  */
-#line 47 "exercici3.y"
-                                          {fprintf(stderr,"ERROR EXPRESSIO INCORRECTA Línea %d \n", nlin);
-                                            yyerrok;	}
-#line 1111 "exercici3.tab.c"
+#line 66 "exercici4.y"
+                                                {
+                							fprintf(stderr,"ERROR EXPRESSIO INCORRECTA Línea %d \n", nlin);
+                                            yyerrok;
+                                     	}
+#line 1123 "exercici4.tab.c"
     break;
 
   case 7: /* expr: '(' expr ')'  */
-#line 51 "exercici3.y"
-                                                {
-											(yyval.exp).expression = (char *) malloc(sizeof(char)*strlen((yyvsp[-1].exp).expression));
-											strcpy((yyval.exp).expression,(yyvsp[-1].exp).expression);
-											(yyval.exp).is_parentized = 1;
-											(yyval.exp).precedence = (yyvsp[-1].exp).precedence;
+#line 72 "exercici4.y"
+                                                { //No s'ha de modificar res, simplement propagar les dades
+											(yyval.expresio) = (yyvsp[-1].expresio);
 										}
-#line 1122 "exercici3.tab.c"
+#line 1131 "exercici4.tab.c"
     break;
 
-  case 8: /* expr: expr '+' expr  */
-#line 57 "exercici3.y"
-                                                {
-      										(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 3));
-      										sprintf((yyval.exp).expression,"%s + %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      										(yyval.exp).is_parentized = 0;
-      										(yyval.exp).precedence = 0;
-      									}
-#line 1133 "exercici3.tab.c"
-    break;
-
-  case 9: /* expr: expr '-' expr  */
-#line 63 "exercici3.y"
-                                                {
-      										(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 3));
-      										sprintf((yyval.exp).expression,"%s - %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      										(yyval.exp).is_parentized = 0;
-      										(yyval.exp).precedence = 0;
-      									}
-#line 1144 "exercici3.tab.c"
-    break;
-
-  case 10: /* expr: expr '*' expr  */
-#line 69 "exercici3.y"
-                                                {
-											int parentize_1 = 0,parentize_2 = 0;
-      										if ((yyvsp[-2].exp).is_parentized && ((yyvsp[-2].exp).precedence == 0 || (yyvsp[-2].exp).precedence == 2)){
-												parentize_1 = 1;
+  case 8: /* expr: expr '*'  */
+#line 75 "exercici4.y"
+                                                { //La expressió apareix 0 o més vegades
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(((yyvsp[-1].expresio).sizeof_a + 2) * sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(((yyvsp[-1].expresio).sizeof_a + 2) * sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(((yyvsp[-1].expresio).sizeof_a + 2) * sizeof(char));
+      										(yyval.expresio).sizeof_a = (yyvsp[-1].expresio).sizeof_a + 2;
+      										for (int i = 0; i < (yyvsp[-1].expresio).sizeof_a; i++){
+      											(yyval.expresio).origen[i] = (yyvsp[-1].expresio).origen[i];
+      											(yyval.expresio).caracter[i] = (yyvsp[-1].expresio).caracter[i];
+      											(yyval.expresio).desti[i] = (yyvsp[-1].expresio).desti[i];
       										}
-      										if ((yyvsp[0].exp).is_parentized && ((yyvsp[0].exp).precedence == 0 || (yyvsp[0].exp).precedence == 2)){
-												parentize_2 = 1;
+      										(yyval.expresio).origen[(yyvsp[-1].expresio).sizeof_a+1] = 0;
+      										(yyval.expresio).desti[(yyvsp[-1].expresio).sizeof_a+1] = (yyvsp[-1].expresio).node_final;
+      										(yyval.expresio).caracter[(yyvsp[-1].expresio).sizeof_a+1] = '0';
+      										(yyval.expresio).origen[(yyvsp[-1].expresio).sizeof_a] = (yyvsp[-1].expresio).node_final;
+      										(yyval.expresio).desti[(yyvsp[-1].expresio).sizeof_a] = 0;
+      										(yyval.expresio).caracter[(yyvsp[-1].expresio).sizeof_a] = '0';
+      										(yyval.expresio).node_final = (yyvsp[-1].expresio).node_final;
+      									}
+#line 1155 "exercici4.tab.c"
+    break;
+
+  case 9: /* expr: expr '+'  */
+#line 94 "exercici4.y"
+                                                { //La expressió apareix 1 o més vegades
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(((yyvsp[-1].expresio).sizeof_a + 1) * sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(((yyvsp[-1].expresio).sizeof_a + 1) * sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(((yyvsp[-1].expresio).sizeof_a + 1) * sizeof(char));
+      										(yyval.expresio).sizeof_a = (yyvsp[-1].expresio).sizeof_a + 1;
+      										for (int i = 0; i < (yyvsp[-1].expresio).sizeof_a; i++){
+      											(yyval.expresio).origen[i] = (yyvsp[-1].expresio).origen[i];
+      											(yyval.expresio).caracter[i] = (yyvsp[-1].expresio).caracter[i];
+      											(yyval.expresio).desti[i] = (yyvsp[-1].expresio).desti[i];
       										}
-      										if (parentize_1 == 1){
-      											if (parentize_2 == 1){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 7));
-      										sprintf((yyval.exp).expression,"(%s) * (%s)", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}else{
-		  											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 5));
-		  											sprintf((yyval.exp).expression,"(%s) * %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}
+      										(yyval.expresio).origen[(yyvsp[-1].expresio).sizeof_a] = (yyvsp[-1].expresio).node_final;
+      										(yyval.expresio).desti[(yyvsp[-1].expresio).sizeof_a] = 0;
+      										(yyval.expresio).caracter[(yyvsp[-1].expresio).sizeof_a] = '0';
+      										(yyval.expresio).node_final = (yyvsp[-1].expresio).node_final;
+      									}
+#line 1176 "exercici4.tab.c"
+    break;
+
+  case 10: /* expr: expr '?'  */
+#line 110 "exercici4.y"
+                                                { // La expressió pot aparèixer 1 vegada o no
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(((yyvsp[-1].expresio).sizeof_a + 1) * sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(((yyvsp[-1].expresio).sizeof_a + 1) * sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(((yyvsp[-1].expresio).sizeof_a + 1) * sizeof(char));
+      										(yyval.expresio).sizeof_a = (yyvsp[-1].expresio).sizeof_a + 1;
+      										for (int i = 0; i < (yyvsp[-1].expresio).sizeof_a; i++){
+      											(yyval.expresio).origen[i] = (yyvsp[-1].expresio).origen[i];
+      											(yyval.expresio).caracter[i] = (yyvsp[-1].expresio).caracter[i];
+      											(yyval.expresio).desti[i] = (yyvsp[-1].expresio).desti[i];
+      										}
+      										(yyval.expresio).origen[(yyvsp[-1].expresio).sizeof_a] = 0;
+      										(yyval.expresio).desti[(yyvsp[-1].expresio).sizeof_a] = (yyvsp[-1].expresio).node_final;
+      										(yyval.expresio).caracter[(yyvsp[-1].expresio).sizeof_a] = '0';
+      										(yyval.expresio).node_final = (yyvsp[-1].expresio).node_final;
+      									}
+#line 1197 "exercici4.tab.c"
+    break;
+
+  case 11: /* expr: expr '.' expr  */
+#line 126 "exercici4.y"
+                                                { // Concatenacio, s'ajunten les 2 amb una l-transicio i es modifica la 2a expressió
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 1) * sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 1) * sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 1) * sizeof(char));
+      										(yyval.expresio).sizeof_a = (yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 1;
+      										int estats_s1 = (yyvsp[-2].expresio).node_final + 1;
+      										int i = 0;
+      										for (i = 0; i < (yyvsp[-2].expresio).sizeof_a; i++){
+      											(yyval.expresio).origen[i] = (yyvsp[-2].expresio).origen[i];
+      											(yyval.expresio).caracter[i] = (yyvsp[-2].expresio).caracter[i];
+      											(yyval.expresio).desti[i] = (yyvsp[-2].expresio).desti[i];
+      										}
+      										(yyval.expresio).origen[i] = (yyvsp[-2].expresio).node_final;
+      										(yyval.expresio).desti[i] = estats_s1;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
+      										for (int j = 0; j < (yyvsp[0].expresio).sizeof_a; j++){
+      											(yyval.expresio).origen[i] = (yyvsp[0].expresio).origen[j] + estats_s1;
+      											(yyval.expresio).caracter[i] = (yyvsp[0].expresio).caracter[j];
+      											(yyval.expresio).desti[i] = (yyvsp[0].expresio).desti[j] + estats_s1;
+      											i++;
+      										}
+      										(yyval.expresio).node_final = (yyvsp[0].expresio).node_final + estats_s1;
+      									}
+#line 1227 "exercici4.tab.c"
+    break;
+
+  case 12: /* expr: expr '|' expr  */
+#line 151 "exercici4.y"
+                                                { // Expressio expr|expr, vol dir que pot ser o una o l'altra
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4) * sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4) * sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(((yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4) * sizeof(char));
+      										(yyval.expresio).sizeof_a = (yyvsp[-2].expresio).sizeof_a + (yyvsp[0].expresio).sizeof_a + 4;
+      										int i = 0;
+      										(yyval.expresio).origen[i] = 0;
+      										(yyval.expresio).desti[i] = 1;
+      										(yyval.expresio).caracter[i] = '0';
+      										int estats_s1 = (yyvsp[-2].expresio).node_final + 1;
+      										for (i = 1; i < (yyvsp[-2].expresio).sizeof_a + 1; i++){
+      											(yyval.expresio).origen[i] = (yyvsp[-2].expresio).origen[i-1]+1;
+      											(yyval.expresio).caracter[i] = (yyvsp[-2].expresio).caracter[i-1];
+      											(yyval.expresio).desti[i] = (yyvsp[-2].expresio).desti[i-1]+1;
+      										}
+      										(yyval.expresio).origen[i] = 0;
+      										(yyval.expresio).desti[i] = (yyvsp[0].expresio).node_inicial+estats_s1+1;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
+      										int estats_s3 = (yyvsp[0].expresio).node_final + 1;
+      										for (int j = 0; j < (yyvsp[0].expresio).sizeof_a; j++){
+      											(yyval.expresio).origen[i] = (yyvsp[0].expresio).origen[j] + estats_s1 + 1;
+      											(yyval.expresio).caracter[i] = (yyvsp[0].expresio).caracter[j];
+      											(yyval.expresio).desti[i] = (yyvsp[0].expresio).desti[j] + estats_s1 + 1;
+      											i++;
+      										}
+      										(yyval.expresio).node_final = estats_s1 + estats_s3 + 1;
+      										(yyval.expresio).origen[i] = estats_s1;
+      										(yyval.expresio).desti[i] = (yyval.expresio).node_final;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
+      										(yyval.expresio).origen[i] = (yyvsp[0].expresio).node_final + estats_s1 + 1;
+      										(yyval.expresio).desti[i] = (yyval.expresio).node_final;
+      										(yyval.expresio).caracter[i] = '0';
+      										i++;
+      									}
+#line 1269 "exercici4.tab.c"
+    break;
+
+  case 13: /* expr: REG  */
+#line 188 "exercici4.y"
+                                                {	//Expressio tipo a, bc, aab...
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).origen = (int *) malloc(sizeof(int) * strlen((yyvsp[0].reg)));
+      										(yyval.expresio).desti = (int *) malloc(sizeof(int) * strlen((yyvsp[0].reg)));
+      										(yyval.expresio).caracter = (char *) malloc(sizeof(char) * strlen((yyvsp[0].reg)));
+      										(yyval.expresio).sizeof_a = strlen((yyvsp[0].reg));
+      										int contador_origen = (yyval.expresio).node_inicial;
+      										for (int i = 0; i < strlen((yyvsp[0].reg)); i++){
+      											(yyval.expresio).origen[i] = contador_origen;
+      											(yyval.expresio).caracter[i] = (yyvsp[0].reg)[i];
+      											contador_origen = contador_origen + 1;
+      											(yyval.expresio).desti[i] = contador_origen;
+      										}
+      										(yyval.expresio).node_final = contador_origen;
+      									}
+#line 1289 "exercici4.tab.c"
+    break;
+
+  case 14: /* expr: BUIDA  */
+#line 203 "exercici4.y"
+                                                                {
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).node_final = 0;
+      										(yyval.expresio).origen = (int *) malloc(sizeof(int));
+      										(yyval.expresio).desti = (int *) malloc(sizeof(int));
+      										(yyval.expresio).caracter = (char *) malloc(sizeof(char));
+      										(yyval.expresio).sizeof_a = 1;
+      										(yyval.expresio).origen[0] = 0;
+      										(yyval.expresio).desti[0] = 0;
+      										(yyval.expresio).caracter[0] = '0';
+      									}
+#line 1305 "exercici4.tab.c"
+    break;
+
+  case 15: /* expr: RANG  */
+#line 214 "exercici4.y"
+                                                                {
+      										(yyval.expresio).node_inicial = 0;
+      										(yyval.expresio).node_final = 1;
+      										(yyval.expresio).sizeof_a = ((yyvsp[0].rangg).final - (yyvsp[0].rangg).inicial);
+      										if ((yyval.expresio).sizeof_a <= 0){
+      											(yyval.expresio).sizeof_a = 1;
+      											(yyval.expresio).origen = (int *) malloc(sizeof(int) * (yyval.expresio).sizeof_a);
+		  										(yyval.expresio).desti = (int *) malloc(sizeof(int) * (yyval.expresio).sizeof_a);
+		  										(yyval.expresio).caracter = (char *) malloc(sizeof(char) * (yyval.expresio).sizeof_a);
+		  										(yyval.expresio).origen[0] = 0;
+		  										(yyval.expresio).desti[0] = 1;
+		  										(yyval.expresio).caracter[0] = '0';
       										}else{
-      											if (parentize_2 == 1){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 5));
-      										sprintf((yyval.exp).expression,"%s * (%s)", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}else{
-		  											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 3));
-		  											sprintf((yyval.exp).expression,"%s * %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}
-      										}
-      										(yyval.exp).is_parentized = 0;
-      										(yyval.exp).precedence = 1;
+      											(yyval.expresio).origen = (int *) malloc(sizeof(int) * (yyval.expresio).sizeof_a);
+		  										(yyval.expresio).desti = (int *) malloc(sizeof(int) * (yyval.expresio).sizeof_a);
+		  										(yyval.expresio).caracter = (char *) malloc(sizeof(char) * (yyval.expresio).sizeof_a);
+		  										for(int i = 0; i < (yyval.expresio).sizeof_a; i++){
+			  										(yyval.expresio).origen[i] = 0;
+			  										(yyval.expresio).desti[i] = 1;
+		  											(yyval.expresio).caracter[i] = (yyvsp[0].rangg).inicial+i;
+		  										}
+		  									}
       									}
-#line 1177 "exercici3.tab.c"
-    break;
-
-  case 11: /* expr: expr MOD expr  */
-#line 97 "exercici3.y"
-                                                {
-      										int parentize_1 = 0,parentize_2 = 0;
-      										if ((yyvsp[-2].exp).is_parentized && ((yyvsp[-2].exp).precedence == 0 || (yyvsp[-2].exp).precedence == 2)){
-												parentize_1 = 1;
-      										}
-      										if ((yyvsp[0].exp).is_parentized && ((yyvsp[0].exp).precedence == 0 || (yyvsp[0].exp).precedence == 2)){
-												parentize_2 = 1;
-      										}
-      										if (parentize_1 == 1){
-      											if (parentize_2 == 1){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 9));
-      										sprintf((yyval.exp).expression,"(%s) mod (%s)", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}else{
-		  											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 7));
-		  											sprintf((yyval.exp).expression,"(%s) mod %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}
-      										}else{
-      											if (parentize_2 == 1){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 7));
-      										sprintf((yyval.exp).expression,"%s mod (%s)", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}else{
-		  											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 5));
-		  											sprintf((yyval.exp).expression,"%s mod %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}
-      										}
-      										(yyval.exp).is_parentized = 0;
-      										(yyval.exp).precedence = 1;
-      									}
-#line 1210 "exercici3.tab.c"
-    break;
-
-  case 12: /* expr: expr DIV expr  */
-#line 125 "exercici3.y"
-                                                        {
-      										int parentize_1 = 0,parentize_2 = 0;
-      										if ((yyvsp[-2].exp).is_parentized && ((yyvsp[-2].exp).precedence == 0 || (yyvsp[-2].exp).precedence == 2)){
-												parentize_1 = 1;
-      										}
-      										if ((yyvsp[0].exp).is_parentized && ((yyvsp[0].exp).precedence == 0 || (yyvsp[0].exp).precedence == 2)){
-												parentize_2 = 1;
-      										}
-      										if (parentize_1 == 1){
-      											if (parentize_2 == 1){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 9));
-      										sprintf((yyval.exp).expression,"(%s) div (%s)", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}else{
-		  											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 7));
-		  											sprintf((yyval.exp).expression,"(%s) div %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}
-      										}else{
-      											if (parentize_2 == 1){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 7));
-      										sprintf((yyval.exp).expression,"%s div (%s)", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}else{
-		  											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[-2].exp).expression) + strlen((yyvsp[0].exp).expression) + 5));
-		  											sprintf((yyval.exp).expression,"%s div %s", (yyvsp[-2].exp).expression, (yyvsp[0].exp).expression);
-      											}
-      										}
-      										(yyval.exp).is_parentized = 0;
-      										(yyval.exp).precedence = 1;
-      									}
-#line 1243 "exercici3.tab.c"
-    break;
-
-  case 13: /* expr: '-' expr  */
-#line 153 "exercici3.y"
-                                                {
-      										if ((yyvsp[0].exp).precedence == 0 || (yyvsp[0].exp).precedence == 2){
-      											if ((yyvsp[0].exp).is_parentized){
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[0].exp).expression) + 3));
-		  											sprintf((yyval.exp).expression,"-(%s)", (yyvsp[0].exp).expression);
-	  												(yyval.exp).is_parentized = 0;
-	  												(yyval.exp).precedence = 3;
-      											}else{
-      												(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[0].exp).expression) + 1));
-		  											sprintf((yyval.exp).expression,"-%s", (yyvsp[0].exp).expression);
-	  												(yyval.exp).is_parentized = 0;
-	  												(yyval.exp).precedence = 3;
-      											}
-      										}else{
-      											(yyval.exp).expression = (char *) malloc(sizeof(char) * (strlen((yyvsp[0].exp).expression) + 1));
-	  											sprintf((yyval.exp).expression,"-%s", (yyvsp[0].exp).expression);
-  												(yyval.exp).is_parentized = 0;
-  												(yyval.exp).precedence = 3;
-  											}
-      									}
-#line 1268 "exercici3.tab.c"
-    break;
-
-  case 14: /* expr: INT  */
-#line 173 "exercici3.y"
-                                                        {
-      										int digits = 1;
-      										int thenum = (yyvsp[0].valor);
-      										while (thenum > 9){
-      											digits += 1;
-      											thenum = thenum / 10;
-      										}
-      										(yyval.exp).expression = (char *) malloc(sizeof(char) * digits);
-      										sprintf((yyval.exp).expression,"%d", (yyvsp[0].valor));
-      									}
-#line 1283 "exercici3.tab.c"
+#line 1333 "exercici4.tab.c"
     break;
 
 
-#line 1287 "exercici3.tab.c"
+#line 1337 "exercici4.tab.c"
 
       default: break;
     }
@@ -1476,7 +1526,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 185 "exercici3.y"
+#line 239 "exercici4.y"
 
 
 /* Called by yyparse on error. */
