@@ -54,9 +54,12 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    OPERADOR = 258,                /* OPERADOR  */
-    REG = 259,                     /* REG  */
-    UMENYS = 260                   /* UMENYS  */
+    IMPLICA = 258,                 /* IMPLICA  */
+    IMPLICAD = 259,                /* IMPLICAD  */
+    OR = 260,                      /* OR  */
+    AND = 261,                     /* AND  */
+    REG = 262,                     /* REG  */
+    UMENYS = 263                   /* UMENYS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -71,7 +74,7 @@ union YYSTYPE
 	char reg;
 	char *expression;
 
-#line 75 "exercici5.tab.h"
+#line 78 "exercici5.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
