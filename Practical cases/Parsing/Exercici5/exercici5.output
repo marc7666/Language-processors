@@ -10,38 +10,44 @@ Gramàtica
     5          | error '\n'
 
     6 expr: '(' expr ')'
-    7     | expr OPERADOR expr
-    8     | '!' expr
-    9     | REG
+    7     | expr AND expr
+    8     | expr OR expr
+    9     | expr IMPLICA expr
+   10     | expr IMPLICAD expr
+   11     | '!' expr
+   12     | REG
 
 
 Terminals, amb regles on apareixen
 
     $end (0) 0
     '\n' (10) 3 4 5
-    '!' (33) 8
+    '!' (33) 11
     '(' (40) 6
     ')' (41) 6
     ';' (59) 4
     error (256) 5
-    OPERADOR <optipus> (258) 7
-    REG <reg> (259) 9
-    UMENYS (260)
+    IMPLICA <optipus> (258) 9
+    IMPLICAD <optipus> (259) 10
+    OR <optipus> (260) 8
+    AND <optipus> (261) 7
+    REG <reg> (262) 12
+    UMENYS (263)
 
 
 No-terminals, amb regles on apareixen
 
-    $accept (11)
+    $accept (14)
         on left: 0
-    calculadora <expression> (12)
+    calculadora <expression> (15)
         on left: 1 2
         on right: 0 2
-    sentencia <expression> (13)
+    sentencia <expression> (16)
         on left: 3 4 5
         on right: 2
-    expr <expression> (14)
-        on left: 6 7 8 9
-        on right: 4 6 7 8
+    expr <expression> (17)
+        on left: 6 7 8 9 10 11 12
+        on right: 4 6 7 8 9 10 11
 
 
 Estat 0
@@ -85,9 +91,9 @@ Estat 3
 
 Estat 4
 
-    9 expr: REG •
+   12 expr: REG •
 
-    $default  redueix usant la regla 9 (expr)
+    $default  redueix usant la regla 12 (expr)
 
 
 Estat 5
@@ -110,7 +116,7 @@ Estat 6
 
 Estat 7
 
-    8 expr: '!' • expr
+   11 expr: '!' • expr
 
     REG  fes un shift, i ves a l'estat 4
     '('  fes un shift, i ves a l'estat 6
@@ -129,10 +135,16 @@ Estat 8
 Estat 9
 
     4 sentencia: expr • ';' '\n'
-    7 expr: expr • OPERADOR expr
+    7 expr: expr • AND expr
+    8     | expr • OR expr
+    9     | expr • IMPLICA expr
+   10     | expr • IMPLICAD expr
 
-    OPERADOR  fes un shift, i ves a l'estat 13
-    ';'       fes un shift, i ves a l'estat 14
+    IMPLICA   fes un shift, i ves a l'estat 13
+    IMPLICAD  fes un shift, i ves a l'estat 14
+    OR        fes un shift, i ves a l'estat 15
+    AND       fes un shift, i ves a l'estat 16
+    ';'       fes un shift, i ves a l'estat 17
 
 
 Estat 10
@@ -145,54 +157,140 @@ Estat 10
 Estat 11
 
     6 expr: '(' expr • ')'
-    7     | expr • OPERADOR expr
+    7     | expr • AND expr
+    8     | expr • OR expr
+    9     | expr • IMPLICA expr
+   10     | expr • IMPLICAD expr
 
-    OPERADOR  fes un shift, i ves a l'estat 13
-    ')'       fes un shift, i ves a l'estat 15
+    IMPLICA   fes un shift, i ves a l'estat 13
+    IMPLICAD  fes un shift, i ves a l'estat 14
+    OR        fes un shift, i ves a l'estat 15
+    AND       fes un shift, i ves a l'estat 16
+    ')'       fes un shift, i ves a l'estat 18
 
 
 Estat 12
 
-    7 expr: expr • OPERADOR expr
-    8     | '!' expr •
+    7 expr: expr • AND expr
+    8     | expr • OR expr
+    9     | expr • IMPLICA expr
+   10     | expr • IMPLICAD expr
+   11     | '!' expr •
 
-    $default  redueix usant la regla 8 (expr)
+    $default  redueix usant la regla 11 (expr)
 
 
 Estat 13
 
-    7 expr: expr OPERADOR • expr
+    9 expr: expr IMPLICA • expr
 
     REG  fes un shift, i ves a l'estat 4
     '('  fes un shift, i ves a l'estat 6
     '!'  fes un shift, i ves a l'estat 7
 
-    expr  ves a l'estat 16
+    expr  ves a l'estat 19
 
 
 Estat 14
 
-    4 sentencia: expr ';' • '\n'
+   10 expr: expr IMPLICAD • expr
 
-    '\n'  fes un shift, i ves a l'estat 17
+    REG  fes un shift, i ves a l'estat 4
+    '('  fes un shift, i ves a l'estat 6
+    '!'  fes un shift, i ves a l'estat 7
+
+    expr  ves a l'estat 20
 
 
 Estat 15
+
+    8 expr: expr OR • expr
+
+    REG  fes un shift, i ves a l'estat 4
+    '('  fes un shift, i ves a l'estat 6
+    '!'  fes un shift, i ves a l'estat 7
+
+    expr  ves a l'estat 21
+
+
+Estat 16
+
+    7 expr: expr AND • expr
+
+    REG  fes un shift, i ves a l'estat 4
+    '('  fes un shift, i ves a l'estat 6
+    '!'  fes un shift, i ves a l'estat 7
+
+    expr  ves a l'estat 22
+
+
+Estat 17
+
+    4 sentencia: expr ';' • '\n'
+
+    '\n'  fes un shift, i ves a l'estat 23
+
+
+Estat 18
 
     6 expr: '(' expr ')' •
 
     $default  redueix usant la regla 6 (expr)
 
 
-Estat 16
+Estat 19
 
-    7 expr: expr • OPERADOR expr
-    7     | expr OPERADOR expr •
+    7 expr: expr • AND expr
+    8     | expr • OR expr
+    9     | expr • IMPLICA expr
+    9     | expr IMPLICA expr •
+   10     | expr • IMPLICAD expr
+
+    OR   fes un shift, i ves a l'estat 15
+    AND  fes un shift, i ves a l'estat 16
+
+    $default  redueix usant la regla 9 (expr)
+
+
+Estat 20
+
+    7 expr: expr • AND expr
+    8     | expr • OR expr
+    9     | expr • IMPLICA expr
+   10     | expr • IMPLICAD expr
+   10     | expr IMPLICAD expr •
+
+    OR   fes un shift, i ves a l'estat 15
+    AND  fes un shift, i ves a l'estat 16
+
+    $default  redueix usant la regla 10 (expr)
+
+
+Estat 21
+
+    7 expr: expr • AND expr
+    8     | expr • OR expr
+    8     | expr OR expr •
+    9     | expr • IMPLICA expr
+   10     | expr • IMPLICAD expr
+
+    AND  fes un shift, i ves a l'estat 16
+
+    $default  redueix usant la regla 8 (expr)
+
+
+Estat 22
+
+    7 expr: expr • AND expr
+    7     | expr AND expr •
+    8     | expr • OR expr
+    9     | expr • IMPLICA expr
+   10     | expr • IMPLICAD expr
 
     $default  redueix usant la regla 7 (expr)
 
 
-Estat 17
+Estat 23
 
     4 sentencia: expr ';' '\n' •
 

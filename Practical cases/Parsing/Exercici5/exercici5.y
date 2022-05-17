@@ -27,12 +27,14 @@
 	char *expression;
 }
 
-%token <optipus> OPERADOR
+%token <optipus> IMPLICA IMPLICAD OR AND
 %token <reg> REG
 
 
-%left OPERADOR
-%left UMENYS        /* precedencia de l'operador unari menys */
+%left IMPLICA IMPLICAD
+%left OR
+%left AND
+%right UMENYS        /* precedencia de l'operador unari menys */
 
 %type <expression> expr  sentencia calculadora
 
@@ -51,25 +53,22 @@ expr  :  '(' expr ')'			{
 									$$ = (char *) malloc(sizeof(char) * (strlen($2) + 2));
 									sprintf($$,"(%s)",$2);
 								}     
-	  |  expr OPERADOR expr		{
-											if($2 == '-'){
-												$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 5));
-      											sprintf($$,"!%s or %s",$1, $3);
-											}else if ($2 == '<'){
-												$$ = (char *) malloc(sizeof(char) * (strlen($1) * 2 + strlen($3) * 2 + 19));
-      											sprintf($$,"(!%s or %s) and (!%s or %s)",$1, $3, $3, $1);
-											}else{
-												// Que printi el OPERADOR que toque
-												if ($2 == 'o' || $2 == '|'){
-													$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 4));
-	      											sprintf($$,"%s or %s",$1, $3);
-												}else if($2 == 'a' || $2 == '&'){
-													$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 5));
-	      											sprintf($$,"%s and %s",$1, $3);
-												}
-												
-											}
-										}
+	  |  expr AND expr			{
+									$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 5));
+	      							sprintf($$,"%s and %s",$1, $3);
+								}
+	  |	expr OR expr 			{
+	  								$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 4));
+	      							sprintf($$,"%s or %s",$1, $3);
+	      						}
+	  | expr IMPLICA expr 		{
+	  								$$ = (char *) malloc(sizeof(char) * (strlen($1) + strlen($3) + 5));
+      								sprintf($$,"!%s or %s",$1, $3);
+      							}
+	  | expr IMPLICAD expr 		{	
+	  								$$ = (char *) malloc(sizeof(char) * (strlen($1) * 2 + strlen($3) * 2 + 19));
+      								sprintf($$,"(!%s or %s) and (!%s or %s)",$1, $3, $3, $1);
+      							}	
       |       '!' expr %prec UMENYS   	{	
       										$$ = (char *) malloc(sizeof(char) * (strlen($2) + 1));
       										sprintf($$,"!%s",$2);

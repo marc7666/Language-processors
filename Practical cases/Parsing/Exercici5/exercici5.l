@@ -29,10 +29,18 @@ vars [A-Z]+
 						nlin++;
 						BEGIN(0);
 					}
-{operators}		{
-								yylval.optipus = yytext[0];
-                                return(OPERADOR);
-                        }
+("or"|"||")		{
+					return(OR);
+				}
+("and"|"&&")	{
+					return(AND);
+				}
+"->"			{
+					return(IMPLICA);
+				}
+"<->"			{
+					return(IMPLICAD);
+				}
 {separators}	{;}
 {vars}			{
 					yylval.reg = yytext[0];
