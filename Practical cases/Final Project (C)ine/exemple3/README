@@ -1,0 +1,48 @@
+ÚS:
+
+./array_adreces [input_file] [output_file]
+
+
+Extensió de l’Exemple1 amb la generació de codi:
+
+	- Per a les declaracions es creen les entrades a la TS
+        - Per a les assignacions es genera la traducció a codi de 3 adreces mitjamçant la creació de variables temporals. 
+	- Per a l’accés a ARRAY, es genera una variable temporal per al costat dret de les assignacions així es garanteix que assignacions de la forma:
+
+begin
+
+float t1[5],t2[4];
+
+int i, j;
+
+i=2;
+
+j=3;
+
+t1[i]=t2[j];
+
+end
+
+són traduïdes a instruccions amb 3 adreces com a màxim.
+
+Per exemple, la traducció de 
+
+	t1[i]=t2[j]; 
+serà:
+
+	temp1 =  *(t2 @ 40 + j * 4)
+	*(t1 @ 0 + i * 4) = temp1 
+
+
+És a dir, 3 adreces màxim per instrucció on 
+
+	temp1 =  *(t2 @ 40 + j * 4)
+
+ ho hem d’interpretar com: copiar a temp1 el contingut del valor de l’array t2 que es troba a l’adreça 40+(j*4)
+
+
+	*(t1 @ 0 + i * 4) = temp1 
+
+
+ho hem d’interpretar com: copiar a l’array t1 a la posició amb adreça 0+(i*4) el valor de la temp2. On tant temp1 com temp2 també tenen una entrada a la TS i una dreça relativa a memòria associada.
+

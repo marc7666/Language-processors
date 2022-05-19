@@ -1,0 +1,1834 @@
+Gramàtica
+
+    0 $accept: programa $end
+
+    1 programa: ε
+    2         | INICI llistainst FINAL
+
+    3 llistainst: ε
+    4           | llistainst inst
+    5           | llistainst ambit
+
+    6 ambit: INICI aux_ambit llistainst FINAL
+
+    7 aux_ambit: ε
+
+    8 inst: ';'
+    9     | decla ';'
+   10     | asig
+   11     | inst_if
+   12     | inst_while
+   13     | error ';'
+
+   14 decla: tipus llistaid
+
+   15 tipus: BOOL
+   16      | INT
+   17      | REAL
+   18      | CHAR
+
+   19 llistaid: aux_iden1 iden_decla
+   20         | llistaid ',' aux_iden2 iden_decla
+
+   21 aux_iden1: ε
+
+   22 aux_iden2: ε
+
+   23 iden_decla: ID
+   24           | ID '[' VINT ']'
+
+   25 asig: ID '=' expr
+   26     | ID '[' expr ']' aux_error '=' expr
+
+   27 aux_error: ε
+
+   28 expr: expr '+' expr
+   29     | expr '-' expr
+   30     | expr '*' expr
+   31     | expr '/' expr
+   32     | '-' expr
+   33     | ID
+   34     | ID '[' expr ']'
+   35     | '(' expr ')'
+   36     | VINT
+   37     | VREAL
+   38     | VCHAR
+   39     | VBOOL
+   40     | NOT expr
+
+   41 $@1: ε
+
+   42 expr: expr AND $@1 expr
+
+   43 $@2: ε
+
+   44 expr: expr OR $@2 expr
+
+   45 $@3: ε
+
+   46 expr: expr '>' $@3 expr
+
+   47 $@4: ε
+
+   48 expr: expr '<' $@4 expr
+
+   49 $@5: ε
+
+   50 expr: expr MAI $@5 expr
+
+   51 $@6: ε
+
+   52 expr: expr MEI $@6 expr
+   53     | expr IG expr
+   54     | expr DIF expr
+
+   55 $@7: ε
+
+   56 $@8: ε
+
+   57 $@9: ε
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 THEN llistainst $@9 else_opcional ENDIF
+   59        | error ENDIF
+
+   60 aux_if: ε
+
+   61 else_opcional: ε
+   62              | ELSE aux_ambit llistainst
+
+   63 $@10: ε
+
+   64 $@11: ε
+
+   65 inst_while: WHILE aux_while $@10 expr $@11 aux_ambit DO llistainst ENDWHILE
+   66           | error ENDWHILE
+
+   67 aux_while: ε
+
+
+Terminals, amb regles on apareixen
+
+    $end (0) 0
+    '(' (40) 35
+    ')' (41) 35
+    '*' (42) 30
+    '+' (43) 28
+    ',' (44) 20
+    '-' (45) 29 32
+    '/' (47) 31
+    ';' (59) 8 9 13
+    '<' (60) 48
+    '=' (61) 25 26
+    '>' (62) 46
+    '[' (91) 24 26 34
+    ']' (93) 24 26 34
+    error (256) 13 59 66
+    ID <name> (258) 23 24 25 26 33 34
+    VINT <name> (259) 24 36
+    VREAL <name> (260) 37
+    VCHAR <name> (261) 38
+    VBOOL <name> (262) 39
+    INT (263) 16
+    REAL (264) 17
+    CHAR (265) 18
+    BOOL (266) 15
+    INICI (267) 2 6
+    FINAL (268) 2 6
+    IF (269) 58
+    THEN (270) 58
+    ELSE (271) 62
+    ENDIF (272) 58 59
+    WHILE (273) 65
+    DO (274) 65
+    ENDWHILE (275) 65 66
+    NOT (276) 40
+    AND (277) 42
+    OR (278) 44
+    MAI (279) 50
+    MEI (280) 52
+    IG (281) 53
+    DIF (282) 54
+    UMENYS (283)
+
+
+No-terminals, amb regles on apareixen
+
+    $accept (42)
+        on left: 0
+    programa <sense_atribut> (43)
+        on left: 1 2
+        on right: 0
+    llistainst <sense_atribut> (44)
+        on left: 3 4 5
+        on right: 2 4 5 6 58 62 65
+    ambit <sense_atribut> (45)
+        on left: 6
+        on right: 5
+    aux_ambit <despla_temp> (46)
+        on left: 7
+        on right: 6 58 62 65
+    inst <sense_atribut> (47)
+        on left: 8 9 10 11 12 13
+        on right: 4
+    decla <sense_atribut> (48)
+        on left: 14
+        on right: 9
+    tipus <tipus_b> (49)
+        on left: 15 16 17 18
+        on right: 14
+    llistaid <tipus_b> (50)
+        on left: 19 20
+        on right: 14 20
+    aux_iden1 <tipus_b> (51)
+        on left: 21
+        on right: 19
+    aux_iden2 <tipus_b> (52)
+        on left: 22
+        on right: 20
+    iden_decla <sense_atribut> (53)
+        on left: 23 24
+        on right: 19 20
+    asig <sense_atribut> (54)
+        on left: 25 26
+        on right: 10
+    aux_error <info> (55)
+        on left: 27
+        on right: 26
+    expr <vbles> (56)
+        on left: 28 29 30 31 32 33 34 35 36 37 38 39 40 42 44 46 48 50 52 53 54
+        on right: 25 26 28 29 30 31 32 34 35 40 42 44 46 48 50 52 53 54 58 65
+    $@1 (57)
+        on left: 41
+        on right: 42
+    $@2 (58)
+        on left: 43
+        on right: 44
+    $@3 (59)
+        on left: 45
+        on right: 46
+    $@4 (60)
+        on left: 47
+        on right: 48
+    $@5 (61)
+        on left: 49
+        on right: 50
+    $@6 (62)
+        on left: 51
+        on right: 52
+    inst_if <sense_atribut> (63)
+        on left: 58 59
+        on right: 11
+    $@7 (64)
+        on left: 55
+        on right: 58
+    $@8 (65)
+        on left: 56
+        on right: 58
+    $@9 (66)
+        on left: 57
+        on right: 58
+    aux_if <bloc_cond> (67)
+        on left: 60
+        on right: 58
+    else_opcional <sense_atribut> (68)
+        on left: 61 62
+        on right: 58
+    inst_while <sense_atribut> (69)
+        on left: 65 66
+        on right: 12
+    $@10 (70)
+        on left: 63
+        on right: 65
+    $@11 (71)
+        on left: 64
+        on right: 65
+    aux_while <bloc_cond> (72)
+        on left: 67
+        on right: 65
+
+
+Estat 0
+
+    0 $accept: • programa $end
+
+    INICI  fes un shift, i ves a l'estat 1
+
+    $default  redueix usant la regla 1 (programa)
+
+    programa  ves a l'estat 2
+
+
+Estat 1
+
+    2 programa: INICI • llistainst FINAL
+
+    $default  redueix usant la regla 3 (llistainst)
+
+    llistainst  ves a l'estat 3
+
+
+Estat 2
+
+    0 $accept: programa • $end
+
+    $end  fes un shift, i ves a l'estat 4
+
+
+Estat 3
+
+    2 programa: INICI llistainst • FINAL
+    4 llistainst: llistainst • inst
+    5           | llistainst • ambit
+
+    error  fes un shift, i ves a l'estat 5
+    ID     fes un shift, i ves a l'estat 6
+    INT    fes un shift, i ves a l'estat 7
+    REAL   fes un shift, i ves a l'estat 8
+    CHAR   fes un shift, i ves a l'estat 9
+    BOOL   fes un shift, i ves a l'estat 10
+    INICI  fes un shift, i ves a l'estat 11
+    FINAL  fes un shift, i ves a l'estat 12
+    IF     fes un shift, i ves a l'estat 13
+    WHILE  fes un shift, i ves a l'estat 14
+    ';'    fes un shift, i ves a l'estat 15
+
+    ambit       ves a l'estat 16
+    inst        ves a l'estat 17
+    decla       ves a l'estat 18
+    tipus       ves a l'estat 19
+    asig        ves a l'estat 20
+    inst_if     ves a l'estat 21
+    inst_while  ves a l'estat 22
+
+
+Estat 4
+
+    0 $accept: programa $end •
+
+    $default  accepta
+
+
+Estat 5
+
+   13 inst: error • ';'
+   59 inst_if: error • ENDIF
+   66 inst_while: error • ENDWHILE
+
+    ENDIF     fes un shift, i ves a l'estat 23
+    ENDWHILE  fes un shift, i ves a l'estat 24
+    ';'       fes un shift, i ves a l'estat 25
+
+
+Estat 6
+
+   25 asig: ID • '=' expr
+   26     | ID • '[' expr ']' aux_error '=' expr
+
+    '['  fes un shift, i ves a l'estat 26
+    '='  fes un shift, i ves a l'estat 27
+
+
+Estat 7
+
+   16 tipus: INT •
+
+    $default  redueix usant la regla 16 (tipus)
+
+
+Estat 8
+
+   17 tipus: REAL •
+
+    $default  redueix usant la regla 17 (tipus)
+
+
+Estat 9
+
+   18 tipus: CHAR •
+
+    $default  redueix usant la regla 18 (tipus)
+
+
+Estat 10
+
+   15 tipus: BOOL •
+
+    $default  redueix usant la regla 15 (tipus)
+
+
+Estat 11
+
+    6 ambit: INICI • aux_ambit llistainst FINAL
+
+    $default  redueix usant la regla 7 (aux_ambit)
+
+    aux_ambit  ves a l'estat 28
+
+
+Estat 12
+
+    2 programa: INICI llistainst FINAL •
+
+    $default  redueix usant la regla 2 (programa)
+
+
+Estat 13
+
+   58 inst_if: IF • expr $@7 aux_if aux_ambit $@8 THEN llistainst $@9 else_opcional ENDIF
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 37
+
+
+Estat 14
+
+   65 inst_while: WHILE • aux_while $@10 expr $@11 aux_ambit DO llistainst ENDWHILE
+
+    $default  redueix usant la regla 67 (aux_while)
+
+    aux_while  ves a l'estat 38
+
+
+Estat 15
+
+    8 inst: ';' •
+
+    $default  redueix usant la regla 8 (inst)
+
+
+Estat 16
+
+    5 llistainst: llistainst ambit •
+
+    $default  redueix usant la regla 5 (llistainst)
+
+
+Estat 17
+
+    4 llistainst: llistainst inst •
+
+    $default  redueix usant la regla 4 (llistainst)
+
+
+Estat 18
+
+    9 inst: decla • ';'
+
+    ';'  fes un shift, i ves a l'estat 39
+
+
+Estat 19
+
+   14 decla: tipus • llistaid
+
+    $default  redueix usant la regla 21 (aux_iden1)
+
+    llistaid   ves a l'estat 40
+    aux_iden1  ves a l'estat 41
+
+
+Estat 20
+
+   10 inst: asig •
+
+    $default  redueix usant la regla 10 (inst)
+
+
+Estat 21
+
+   11 inst: inst_if •
+
+    $default  redueix usant la regla 11 (inst)
+
+
+Estat 22
+
+   12 inst: inst_while •
+
+    $default  redueix usant la regla 12 (inst)
+
+
+Estat 23
+
+   59 inst_if: error ENDIF •
+
+    $default  redueix usant la regla 59 (inst_if)
+
+
+Estat 24
+
+   66 inst_while: error ENDWHILE •
+
+    $default  redueix usant la regla 66 (inst_while)
+
+
+Estat 25
+
+   13 inst: error ';' •
+
+    $default  redueix usant la regla 13 (inst)
+
+
+Estat 26
+
+   26 asig: ID '[' • expr ']' aux_error '=' expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 42
+
+
+Estat 27
+
+   25 asig: ID '=' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 43
+
+
+Estat 28
+
+    6 ambit: INICI aux_ambit • llistainst FINAL
+
+    $default  redueix usant la regla 3 (llistainst)
+
+    llistainst  ves a l'estat 44
+
+
+Estat 29
+
+   33 expr: ID •
+   34     | ID • '[' expr ']'
+
+    '['  fes un shift, i ves a l'estat 45
+
+    $default  redueix usant la regla 33 (expr)
+
+
+Estat 30
+
+   36 expr: VINT •
+
+    $default  redueix usant la regla 36 (expr)
+
+
+Estat 31
+
+   37 expr: VREAL •
+
+    $default  redueix usant la regla 37 (expr)
+
+
+Estat 32
+
+   38 expr: VCHAR •
+
+    $default  redueix usant la regla 38 (expr)
+
+
+Estat 33
+
+   39 expr: VBOOL •
+
+    $default  redueix usant la regla 39 (expr)
+
+
+Estat 34
+
+   40 expr: NOT • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 46
+
+
+Estat 35
+
+   32 expr: '-' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 47
+
+
+Estat 36
+
+   35 expr: '(' • expr ')'
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 48
+
+
+Estat 37
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+   58 inst_if: IF expr • $@7 aux_if aux_ambit $@8 THEN llistainst $@9 else_opcional ENDIF
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 55 ($@7)
+
+    $@7  ves a l'estat 61
+
+
+Estat 38
+
+   65 inst_while: WHILE aux_while • $@10 expr $@11 aux_ambit DO llistainst ENDWHILE
+
+    $default  redueix usant la regla 63 ($@10)
+
+    $@10  ves a l'estat 62
+
+
+Estat 39
+
+    9 inst: decla ';' •
+
+    $default  redueix usant la regla 9 (inst)
+
+
+Estat 40
+
+   14 decla: tipus llistaid •
+   20 llistaid: llistaid • ',' aux_iden2 iden_decla
+
+    ','  fes un shift, i ves a l'estat 63
+
+    $default  redueix usant la regla 14 (decla)
+
+
+Estat 41
+
+   19 llistaid: aux_iden1 • iden_decla
+
+    ID  fes un shift, i ves a l'estat 64
+
+    iden_decla  ves a l'estat 65
+
+
+Estat 42
+
+   26 asig: ID '[' expr • ']' aux_error '=' expr
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+    ']'  fes un shift, i ves a l'estat 66
+
+
+Estat 43
+
+   25 asig: ID '=' expr •
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 25 (asig)
+
+
+Estat 44
+
+    4 llistainst: llistainst • inst
+    5           | llistainst • ambit
+    6 ambit: INICI aux_ambit llistainst • FINAL
+
+    error  fes un shift, i ves a l'estat 5
+    ID     fes un shift, i ves a l'estat 6
+    INT    fes un shift, i ves a l'estat 7
+    REAL   fes un shift, i ves a l'estat 8
+    CHAR   fes un shift, i ves a l'estat 9
+    BOOL   fes un shift, i ves a l'estat 10
+    INICI  fes un shift, i ves a l'estat 11
+    FINAL  fes un shift, i ves a l'estat 67
+    IF     fes un shift, i ves a l'estat 13
+    WHILE  fes un shift, i ves a l'estat 14
+    ';'    fes un shift, i ves a l'estat 15
+
+    ambit       ves a l'estat 16
+    inst        ves a l'estat 17
+    decla       ves a l'estat 18
+    tipus       ves a l'estat 19
+    asig        ves a l'estat 20
+    inst_if     ves a l'estat 21
+    inst_while  ves a l'estat 22
+
+
+Estat 45
+
+   34 expr: ID '[' • expr ']'
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 68
+
+
+Estat 46
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   40     | NOT expr •
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 40 (expr)
+
+
+Estat 47
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   32     | '-' expr •
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    $default  redueix usant la regla 32 (expr)
+
+
+Estat 48
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   35     | '(' expr • ')'
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+    ')'  fes un shift, i ves a l'estat 69
+
+
+Estat 49
+
+   42 expr: expr AND • $@1 expr
+
+    $default  redueix usant la regla 41 ($@1)
+
+    $@1  ves a l'estat 70
+
+
+Estat 50
+
+   44 expr: expr OR • $@2 expr
+
+    $default  redueix usant la regla 43 ($@2)
+
+    $@2  ves a l'estat 71
+
+
+Estat 51
+
+   50 expr: expr MAI • $@5 expr
+
+    $default  redueix usant la regla 49 ($@5)
+
+    $@5  ves a l'estat 72
+
+
+Estat 52
+
+   52 expr: expr MEI • $@6 expr
+
+    $default  redueix usant la regla 51 ($@6)
+
+    $@6  ves a l'estat 73
+
+
+Estat 53
+
+   46 expr: expr '>' • $@3 expr
+
+    $default  redueix usant la regla 45 ($@3)
+
+    $@3  ves a l'estat 74
+
+
+Estat 54
+
+   48 expr: expr '<' • $@4 expr
+
+    $default  redueix usant la regla 47 ($@4)
+
+    $@4  ves a l'estat 75
+
+
+Estat 55
+
+   53 expr: expr IG • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 76
+
+
+Estat 56
+
+   54 expr: expr DIF • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 77
+
+
+Estat 57
+
+   28 expr: expr '+' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 78
+
+
+Estat 58
+
+   29 expr: expr '-' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 79
+
+
+Estat 59
+
+   30 expr: expr '*' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 80
+
+
+Estat 60
+
+   31 expr: expr '/' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 81
+
+
+Estat 61
+
+   58 inst_if: IF expr $@7 • aux_if aux_ambit $@8 THEN llistainst $@9 else_opcional ENDIF
+
+    $default  redueix usant la regla 60 (aux_if)
+
+    aux_if  ves a l'estat 82
+
+
+Estat 62
+
+   65 inst_while: WHILE aux_while $@10 • expr $@11 aux_ambit DO llistainst ENDWHILE
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 83
+
+
+Estat 63
+
+   20 llistaid: llistaid ',' • aux_iden2 iden_decla
+
+    $default  redueix usant la regla 22 (aux_iden2)
+
+    aux_iden2  ves a l'estat 84
+
+
+Estat 64
+
+   23 iden_decla: ID •
+   24           | ID • '[' VINT ']'
+
+    '['  fes un shift, i ves a l'estat 85
+
+    $default  redueix usant la regla 23 (iden_decla)
+
+
+Estat 65
+
+   19 llistaid: aux_iden1 iden_decla •
+
+    $default  redueix usant la regla 19 (llistaid)
+
+
+Estat 66
+
+   26 asig: ID '[' expr ']' • aux_error '=' expr
+
+    $default  redueix usant la regla 27 (aux_error)
+
+    aux_error  ves a l'estat 86
+
+
+Estat 67
+
+    6 ambit: INICI aux_ambit llistainst FINAL •
+
+    $default  redueix usant la regla 6 (ambit)
+
+
+Estat 68
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   34     | ID '[' expr • ']'
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+    ']'  fes un shift, i ves a l'estat 87
+
+
+Estat 69
+
+   35 expr: '(' expr ')' •
+
+    $default  redueix usant la regla 35 (expr)
+
+
+Estat 70
+
+   42 expr: expr AND $@1 • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 88
+
+
+Estat 71
+
+   44 expr: expr OR $@2 • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 89
+
+
+Estat 72
+
+   50 expr: expr MAI $@5 • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 90
+
+
+Estat 73
+
+   52 expr: expr MEI $@6 • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 91
+
+
+Estat 74
+
+   46 expr: expr '>' $@3 • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 92
+
+
+Estat 75
+
+   48 expr: expr '<' $@4 • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 93
+
+
+Estat 76
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   53     | expr IG expr •
+   54     | expr • DIF expr
+
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 53 (expr)
+
+
+Estat 77
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+   54     | expr DIF expr •
+
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 54 (expr)
+
+
+Estat 78
+
+   28 expr: expr • '+' expr
+   28     | expr '+' expr •
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 28 (expr)
+
+
+Estat 79
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   29     | expr '-' expr •
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 29 (expr)
+
+
+Estat 80
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   30     | expr '*' expr •
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    $default  redueix usant la regla 30 (expr)
+
+
+Estat 81
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   31     | expr '/' expr •
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    $default  redueix usant la regla 31 (expr)
+
+
+Estat 82
+
+   58 inst_if: IF expr $@7 aux_if • aux_ambit $@8 THEN llistainst $@9 else_opcional ENDIF
+
+    $default  redueix usant la regla 7 (aux_ambit)
+
+    aux_ambit  ves a l'estat 94
+
+
+Estat 83
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+   65 inst_while: WHILE aux_while $@10 expr • $@11 aux_ambit DO llistainst ENDWHILE
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 64 ($@11)
+
+    $@11  ves a l'estat 95
+
+
+Estat 84
+
+   20 llistaid: llistaid ',' aux_iden2 • iden_decla
+
+    ID  fes un shift, i ves a l'estat 64
+
+    iden_decla  ves a l'estat 96
+
+
+Estat 85
+
+   24 iden_decla: ID '[' • VINT ']'
+
+    VINT  fes un shift, i ves a l'estat 97
+
+
+Estat 86
+
+   26 asig: ID '[' expr ']' aux_error • '=' expr
+
+    '='  fes un shift, i ves a l'estat 98
+
+
+Estat 87
+
+   34 expr: ID '[' expr ']' •
+
+    $default  redueix usant la regla 34 (expr)
+
+
+Estat 88
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   42     | expr AND $@1 expr •
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 42 (expr)
+
+
+Estat 89
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   44     | expr OR $@2 expr •
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 44 (expr)
+
+
+Estat 90
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   50     | expr MAI $@5 expr •
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 50 (expr)
+
+
+Estat 91
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   52     | expr MEI $@6 expr •
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 52 (expr)
+
+
+Estat 92
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   46     | expr '>' $@3 expr •
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 46 (expr)
+
+
+Estat 93
+
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   48     | expr '<' $@4 expr •
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 48 (expr)
+
+
+Estat 94
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit • $@8 THEN llistainst $@9 else_opcional ENDIF
+
+    $default  redueix usant la regla 56 ($@8)
+
+    $@8  ves a l'estat 99
+
+
+Estat 95
+
+   65 inst_while: WHILE aux_while $@10 expr $@11 • aux_ambit DO llistainst ENDWHILE
+
+    $default  redueix usant la regla 7 (aux_ambit)
+
+    aux_ambit  ves a l'estat 100
+
+
+Estat 96
+
+   20 llistaid: llistaid ',' aux_iden2 iden_decla •
+
+    $default  redueix usant la regla 20 (llistaid)
+
+
+Estat 97
+
+   24 iden_decla: ID '[' VINT • ']'
+
+    ']'  fes un shift, i ves a l'estat 101
+
+
+Estat 98
+
+   26 asig: ID '[' expr ']' aux_error '=' • expr
+
+    ID     fes un shift, i ves a l'estat 29
+    VINT   fes un shift, i ves a l'estat 30
+    VREAL  fes un shift, i ves a l'estat 31
+    VCHAR  fes un shift, i ves a l'estat 32
+    VBOOL  fes un shift, i ves a l'estat 33
+    NOT    fes un shift, i ves a l'estat 34
+    '-'    fes un shift, i ves a l'estat 35
+    '('    fes un shift, i ves a l'estat 36
+
+    expr  ves a l'estat 102
+
+
+Estat 99
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 • THEN llistainst $@9 else_opcional ENDIF
+
+    THEN  fes un shift, i ves a l'estat 103
+
+
+Estat 100
+
+   65 inst_while: WHILE aux_while $@10 expr $@11 aux_ambit • DO llistainst ENDWHILE
+
+    DO  fes un shift, i ves a l'estat 104
+
+
+Estat 101
+
+   24 iden_decla: ID '[' VINT ']' •
+
+    $default  redueix usant la regla 24 (iden_decla)
+
+
+Estat 102
+
+   26 asig: ID '[' expr ']' aux_error '=' expr •
+   28 expr: expr • '+' expr
+   29     | expr • '-' expr
+   30     | expr • '*' expr
+   31     | expr • '/' expr
+   42     | expr • AND $@1 expr
+   44     | expr • OR $@2 expr
+   46     | expr • '>' $@3 expr
+   48     | expr • '<' $@4 expr
+   50     | expr • MAI $@5 expr
+   52     | expr • MEI $@6 expr
+   53     | expr • IG expr
+   54     | expr • DIF expr
+
+    AND  fes un shift, i ves a l'estat 49
+    OR   fes un shift, i ves a l'estat 50
+    MAI  fes un shift, i ves a l'estat 51
+    MEI  fes un shift, i ves a l'estat 52
+    '>'  fes un shift, i ves a l'estat 53
+    '<'  fes un shift, i ves a l'estat 54
+    IG   fes un shift, i ves a l'estat 55
+    DIF  fes un shift, i ves a l'estat 56
+    '+'  fes un shift, i ves a l'estat 57
+    '-'  fes un shift, i ves a l'estat 58
+    '*'  fes un shift, i ves a l'estat 59
+    '/'  fes un shift, i ves a l'estat 60
+
+    $default  redueix usant la regla 26 (asig)
+
+
+Estat 103
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 THEN • llistainst $@9 else_opcional ENDIF
+
+    $default  redueix usant la regla 3 (llistainst)
+
+    llistainst  ves a l'estat 105
+
+
+Estat 104
+
+   65 inst_while: WHILE aux_while $@10 expr $@11 aux_ambit DO • llistainst ENDWHILE
+
+    $default  redueix usant la regla 3 (llistainst)
+
+    llistainst  ves a l'estat 106
+
+
+Estat 105
+
+    4 llistainst: llistainst • inst
+    5           | llistainst • ambit
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 THEN llistainst • $@9 else_opcional ENDIF
+
+    error  fes un shift, i ves a l'estat 5
+    ID     fes un shift, i ves a l'estat 6
+    INT    fes un shift, i ves a l'estat 7
+    REAL   fes un shift, i ves a l'estat 8
+    CHAR   fes un shift, i ves a l'estat 9
+    BOOL   fes un shift, i ves a l'estat 10
+    INICI  fes un shift, i ves a l'estat 11
+    IF     fes un shift, i ves a l'estat 13
+    WHILE  fes un shift, i ves a l'estat 14
+    ';'    fes un shift, i ves a l'estat 15
+
+    ELSE   redueix usant la regla 57 ($@9)
+    ENDIF  redueix usant la regla 57 ($@9)
+
+    ambit       ves a l'estat 16
+    inst        ves a l'estat 17
+    decla       ves a l'estat 18
+    tipus       ves a l'estat 19
+    asig        ves a l'estat 20
+    inst_if     ves a l'estat 21
+    $@9         ves a l'estat 107
+    inst_while  ves a l'estat 22
+
+
+Estat 106
+
+    4 llistainst: llistainst • inst
+    5           | llistainst • ambit
+   65 inst_while: WHILE aux_while $@10 expr $@11 aux_ambit DO llistainst • ENDWHILE
+
+    error     fes un shift, i ves a l'estat 5
+    ID        fes un shift, i ves a l'estat 6
+    INT       fes un shift, i ves a l'estat 7
+    REAL      fes un shift, i ves a l'estat 8
+    CHAR      fes un shift, i ves a l'estat 9
+    BOOL      fes un shift, i ves a l'estat 10
+    INICI     fes un shift, i ves a l'estat 11
+    IF        fes un shift, i ves a l'estat 13
+    WHILE     fes un shift, i ves a l'estat 14
+    ENDWHILE  fes un shift, i ves a l'estat 108
+    ';'       fes un shift, i ves a l'estat 15
+
+    ambit       ves a l'estat 16
+    inst        ves a l'estat 17
+    decla       ves a l'estat 18
+    tipus       ves a l'estat 19
+    asig        ves a l'estat 20
+    inst_if     ves a l'estat 21
+    inst_while  ves a l'estat 22
+
+
+Estat 107
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 THEN llistainst $@9 • else_opcional ENDIF
+
+    ELSE  fes un shift, i ves a l'estat 109
+
+    $default  redueix usant la regla 61 (else_opcional)
+
+    else_opcional  ves a l'estat 110
+
+
+Estat 108
+
+   65 inst_while: WHILE aux_while $@10 expr $@11 aux_ambit DO llistainst ENDWHILE •
+
+    $default  redueix usant la regla 65 (inst_while)
+
+
+Estat 109
+
+   62 else_opcional: ELSE • aux_ambit llistainst
+
+    $default  redueix usant la regla 7 (aux_ambit)
+
+    aux_ambit  ves a l'estat 111
+
+
+Estat 110
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 THEN llistainst $@9 else_opcional • ENDIF
+
+    ENDIF  fes un shift, i ves a l'estat 112
+
+
+Estat 111
+
+   62 else_opcional: ELSE aux_ambit • llistainst
+
+    $default  redueix usant la regla 3 (llistainst)
+
+    llistainst  ves a l'estat 113
+
+
+Estat 112
+
+   58 inst_if: IF expr $@7 aux_if aux_ambit $@8 THEN llistainst $@9 else_opcional ENDIF •
+
+    $default  redueix usant la regla 58 (inst_if)
+
+
+Estat 113
+
+    4 llistainst: llistainst • inst
+    5           | llistainst • ambit
+   62 else_opcional: ELSE aux_ambit llistainst •
+
+    error  fes un shift, i ves a l'estat 5
+    ID     fes un shift, i ves a l'estat 6
+    INT    fes un shift, i ves a l'estat 7
+    REAL   fes un shift, i ves a l'estat 8
+    CHAR   fes un shift, i ves a l'estat 9
+    BOOL   fes un shift, i ves a l'estat 10
+    INICI  fes un shift, i ves a l'estat 11
+    IF     fes un shift, i ves a l'estat 13
+    WHILE  fes un shift, i ves a l'estat 14
+    ';'    fes un shift, i ves a l'estat 15
+
+    ENDIF  redueix usant la regla 62 (else_opcional)
+
+    ambit       ves a l'estat 16
+    inst        ves a l'estat 17
+    decla       ves a l'estat 18
+    tipus       ves a l'estat 19
+    asig        ves a l'estat 20
+    inst_if     ves a l'estat 21
+    inst_while  ves a l'estat 22

@@ -1,0 +1,23 @@
+int variable = 3, variant;
+variant = 5;
+
+You can take the blue pill (variable <= variant) {
+  print("Hola");
+  variant -= 1;
+} or you can take the red pill {
+  print("Adeu");
+  variable += 1;
+}
+char a = 'a';
+float v = mult_by(-15.4, 3);
+I can do this all day (variable > 5 || variant < 2){
+  Fight! {
+    a = a + 1;
+    v = v - 2;
+  } Are you not entertained? (a != 'e' and v > 7);
+}
+print("What da heeeeeee");
+Good morning(int i = 0;) and in case I don't see you, good evening (i += 1;) and good night (i < 10) {
+  print("Dins del bucle");
+}
+--Text del comentari

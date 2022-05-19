@@ -1,0 +1,50 @@
+begin
+	float t1[5],t2[4];
+
+	int i, j;
+
+	i=2;
+
+	j=3;
+
+	t1[i]=t2[j];
+
+	if (i>=2) then
+	
+		bool b;
+
+		b=true;
+
+		while (b==true) do
+
+			int c;
+
+			c=7;
+
+			if (c<=7) then
+
+				 int x;
+
+                 c=c+1;
+
+				 x=7+i;
+
+			else if (c<=7 && t1[i]*2  != t2[j]) then
+
+					int y;
+
+					y = i+1;
+
+					b= false || (t1[i]==t2[j]);
+				endif
+			endif
+
+		endwhile
+
+		b=false;
+
+	endif
+	t1[i] = 5* t2[j] + t1[j];
+
+end
+

@@ -1,0 +1,50 @@
+begin
+
+	float t1[5],t2[4];
+
+	int i, j;
+
+	i=2;
+
+	j=3;
+
+	t1[i]=t2[j];
+
+	if (i>=2) then
+	
+		bool b;
+
+		b=true;
+
+		while (b==true) do
+
+			int c;
+
+			c=7;
+
+			if (c<=7) then
+
+				int x;
+
+               			 c=c+1;
+
+				x=7+i;
+			endif
+
+			int y;
+
+			x = x+1;
+			
+			c=c+1;
+
+			b=false;
+
+		endwhile
+
+		
+		b=false;
+
+	endif
+
+end
+

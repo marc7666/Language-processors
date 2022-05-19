@@ -7,13 +7,13 @@ Variables:
 int[ESPECIFIC] nom_token
 char[][MIDA] matriu de chars
 float
-bool 
+bool
 
 Expresions enteres:
-+ - / div * % mod ** 
++ - / div * % mod **
 
 Expressions reals:
-+ - / // div * % mod ** 
++ - / // div * % mod **
 
 Expressions lògiques:
 && and || or -> <-> not !
@@ -22,7 +22,7 @@ Estructures algoritmiques:
 Assignació: nom_variable, I am your father (expresio)
 If/else: You take the blue pill (condicio) {codi} Or you take the red pill {codi}
 While: I can do this all day (Condicio){codi}
-Do/while: do {codi} Are you not entertained? (condicio)
+Do/while: Fight! {codi} Are you not entertained? (condicio)
 For: Good morning (expr inicial) and in case i don't see you, good evening (cada volta) and good night(condicio final) {codi}
 
 Errors: Satisfaction isn't my nature
@@ -33,5 +33,5 @@ int main(){
 	if(){
 		//variable
 	}
-	
+
 }
