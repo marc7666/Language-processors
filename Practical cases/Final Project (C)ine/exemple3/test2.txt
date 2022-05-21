@@ -1,0 +1,66 @@
+begin
+
+	int a,b;
+
+	char c;
+
+	int t1[10], t2[0];
+
+	int t[5;
+
+	float t2[5];
+
+	a=4;
+	b=56*7+2;
+	c=a+b;
+
+	int i, j;
+
+	i=3;
+
+	j=2;
+
+	t1[i+j]=4;
+
+	t1[i+j]=t1[i+2];
+
+	t1[2]=4.56+2;
+
+	t2[3]=4.56*3.14;
+
+	begin
+
+		float e,f,g;
+
+		e=6.7E-4;
+
+		f=e*5/2;
+
+		// visible àmbit actual i inferiors
+
+		f=a+b;
+
+	end
+
+	// error accés fora de l’àmbit
+
+	g=e+f;
+
+
+	begin
+
+		int e,f;
+
+		e= a+b;
+
+		b=e+f;
+
+	end
+
+	int e,f;
+
+	e= a+b;
+	c= a*2;
+
+end
+

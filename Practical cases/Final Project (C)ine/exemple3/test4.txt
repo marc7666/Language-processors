@@ -1,0 +1,14 @@
+begin
+
+float t1[5],t2[4];
+
+int i, j;
+
+i=2;
+
+j=3;
+
+t1[i]=t2[j];
+
+end
+
