@@ -33,7 +33,7 @@
                     }
 <inside_string>[^\"]+   {
                           printf("STRING (%s)",yytext);
-                          return(STRING);
+                          return(CADENA);
                         }
 "You can take the blue pill"  {
                                 printf("IF");
@@ -171,6 +171,10 @@
 "float "           {
                       printf("FLOAT");
                       return(FLOAT);
+                    }
+"string "           {
+                      printf("STRING");
+                      return(STRING);
                     }
 [0-9]+"."[0-9]+     {
                       printf("REAL (%.2f)", atof(yytext));

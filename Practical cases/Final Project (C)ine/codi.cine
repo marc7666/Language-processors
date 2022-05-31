@@ -1,5 +1,14 @@
 int variable = 3, variant;
+int bariabol = 3.5;
+int varib = 3, varian = "que";
 variant = 5;
+
+variant *= 5;
+variant /= 'a';
+char car = 'b';
+b *= 3;
+b += "cs";
+b += 3;
 
 You can take the blue pill (variable <= variant) {
   print("Hola");

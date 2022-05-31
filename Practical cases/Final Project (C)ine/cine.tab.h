@@ -64,33 +64,34 @@ extern int yydebug;
     CARACTER = 265,                /* CARACTER  */
     BOOLEAN = 266,                 /* BOOLEAN  */
     STRING = 267,                  /* STRING  */
-    IF = 268,                      /* IF  */
-    ELSE = 269,                    /* ELSE  */
-    DO = 270,                      /* DO  */
-    WHILE = 271,                   /* WHILE  */
-    FOR1 = 272,                    /* FOR1  */
-    FOR2 = 273,                    /* FOR2  */
-    FOR3 = 274,                    /* FOR3  */
-    ADDTO = 275,                   /* ADDTO  */
-    SUBFROM = 276,                 /* SUBFROM  */
-    MULTBY = 277,                  /* MULTBY  */
-    DIVBY = 278,                   /* DIVBY  */
-    NOT = 279,                     /* NOT  */
-    AND = 280,                     /* AND  */
-    OR = 281,                      /* OR  */
-    IMPLICA = 282,                 /* IMPLICA  */
-    IMPLICADOB = 283,              /* IMPLICADOB  */
-    LT = 284,                      /* LT  */
-    GT = 285,                      /* GT  */
-    GTE = 286,                     /* GTE  */
-    LTE = 287,                     /* LTE  */
-    EQ = 288,                      /* EQ  */
-    NE = 289,                      /* NE  */
-    DIV = 290,                     /* DIV  */
-    MOD = 291,                     /* MOD  */
-    INTDIV = 292,                  /* INTDIV  */
-    POWER = 293,                   /* POWER  */
-    UMENYS = 294                   /* UMENYS  */
+    CADENA = 268,                  /* CADENA  */
+    IF = 269,                      /* IF  */
+    ELSE = 270,                    /* ELSE  */
+    DO = 271,                      /* DO  */
+    WHILE = 272,                   /* WHILE  */
+    FOR1 = 273,                    /* FOR1  */
+    FOR2 = 274,                    /* FOR2  */
+    FOR3 = 275,                    /* FOR3  */
+    ADDTO = 276,                   /* ADDTO  */
+    SUBFROM = 277,                 /* SUBFROM  */
+    MULTBY = 278,                  /* MULTBY  */
+    DIVBY = 279,                   /* DIVBY  */
+    NOT = 280,                     /* NOT  */
+    AND = 281,                     /* AND  */
+    OR = 282,                      /* OR  */
+    IMPLICA = 283,                 /* IMPLICA  */
+    IMPLICADOB = 284,              /* IMPLICADOB  */
+    LT = 285,                      /* LT  */
+    GT = 286,                      /* GT  */
+    GTE = 287,                     /* GTE  */
+    LTE = 288,                     /* LTE  */
+    EQ = 289,                      /* EQ  */
+    NE = 290,                      /* NE  */
+    DIV = 291,                     /* DIV  */
+    MOD = 292,                     /* MOD  */
+    INTDIV = 293,                  /* INTDIV  */
+    POWER = 294,                   /* POWER  */
+    UMENYS = 295                   /* UMENYS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -99,15 +100,19 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 12 "cine.y"
+#line 21 "cine.y"
 
   void *sense_atribut;
   int valor_enter;
   float valor_real;
   char caracter;
   char *lexema;
+  struct variable {
+    int tipus;
+    char *lexema;
+  } variable;
 
-#line 111 "cine.tab.h"
+#line 116 "cine.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
