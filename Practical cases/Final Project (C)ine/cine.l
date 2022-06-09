@@ -10,7 +10,7 @@
   #include<stdlib.h>
   #include "cine.tab.h"
 
-  int lines = 0;
+  int lines = 1;
   char error[24];
 %}
 
@@ -156,19 +156,19 @@
                       yylval.caracter = yytext[1];
                       return(CARACTER);
                     }
-"int "             {
+"int"               {
                       printf("INT");
                       return(INT);
                     }
-"bool "            {
+"bool"              {
                       printf("BOOL");
                       return(BOOL);
                     }
-"char "            {
+"char"            {
                       printf("CHAR");
                       return(CHAR);
                     }
-"float "           {
+"float"           {
                       printf("FLOAT");
                       return(FLOAT);
                     }

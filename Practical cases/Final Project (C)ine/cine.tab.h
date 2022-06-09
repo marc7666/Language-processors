@@ -100,14 +100,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 21 "cine.y"
+#line 29 "cine.y"
 
   void *sense_atribut;
   int valor_enter;
   float valor_real;
   char caracter;
   char *lexema;
-  struct variable {
+  struct variable_s {
     int tipus;
     char *lexema;
   } variable;
