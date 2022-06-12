@@ -1,5 +1,21 @@
 int variable = 3, variant;
+float bariabol = 3.5;
+int varib = 3;
+string varian = "que";
 variant = 5;
+
+int[5] arraydeints;
+float[3.0] arraydefloats;
+int[5][6][7] cubo;
+
+variant *= 5; --correcte
+variant /= 'a'; --incorrecte
+char car = 'b';
+b += 1; --correcte
+b -= 1; --correcte
+b *= 3; --correcte
+b += "cs"; --correcte
+b += 3; --incorrecte
 
 You can take the blue pill (variable <= variant) {
   print("Hola");

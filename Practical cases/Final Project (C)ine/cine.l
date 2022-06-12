@@ -10,7 +10,7 @@
   #include<stdlib.h>
   #include "cine.tab.h"
 
-  int lines = 0;
+  int lines = 1;
   char error[24];
 %}
 
@@ -33,7 +33,7 @@
                     }
 <inside_string>[^\"]+   {
                           printf("STRING (%s)",yytext);
-                          return(STRING);
+                          return(CADENA);
                         }
 "You can take the blue pill"  {
                                 printf("IF");
@@ -156,21 +156,25 @@
                       yylval.caracter = yytext[1];
                       return(CARACTER);
                     }
-"int "             {
+"int"               {
                       printf("INT");
                       return(INT);
                     }
-"bool "            {
+"bool"              {
                       printf("BOOL");
                       return(BOOL);
                     }
-"char "            {
+"char"            {
                       printf("CHAR");
                       return(CHAR);
                     }
-"float "           {
+"float"           {
                       printf("FLOAT");
                       return(FLOAT);
+                    }
+"string "           {
+                      printf("STRING");
+                      return(STRING);
                     }
 [0-9]+"."[0-9]+     {
                       printf("REAL (%.2f)", atof(yytext));
